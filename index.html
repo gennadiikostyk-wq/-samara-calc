@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -65,7 +63,14 @@
     <label><input type="checkbox" id="tile"> Плитка (ванная/кухня)</label>
     <label><input type="checkbox" id="gips"> Гипсокартон (потолок/перегородки)</label>
     <label><input type="checkbox" id="elec"> Замена розеток</label>
+    <!-- новые чек-боксы -->
+    <label><input type="checkbox" id="toilet"> Установка унитаза</label>
+    <label><input type="checkbox" id="sink"> Установка раковины</label>
+    <label><input type="checkbox" id="bath"> Установка ванны</label>
+    <label><input type="checkbox" id="box"> Короб ГКЛ</label>
+    <label><input type="checkbox" id="slopes"> Откосы окон/дверей</label>
 
+    <p class="note">Поставьте галочки только на нужные работы. Можно изменить и пересчитать.</p>
     <button class="calc-btn" onclick="estimate()">Посчитать смету</button>
   </div>
 
@@ -79,10 +84,11 @@
   </div>
 
   <div class="card">
-  <h2>3. Примеры работ</h2>
-  <p>Посмотреть все фото и видео наших объектов можно в альбоме сообщества:</p>
-  <p><a href="https://vk.com/63remontkv?z=album-175983542_259221831" target="_blank" style="font-weight:600;color:var(--accent)">Открыть альбом «Ремонт квартир Самара» →</a></p>
-  <p style="font-size:13px;color:#555;margin-top:8px">Работы разных годов: косметический, комплексный, капитальный ремонт, гипсокартон, плитка, ламинат.</p>
+    <h2>3. Примеры работ</h2>
+    <p>Посмотреть все фото и видео наших объектов можно в альбоме сообщества:</p>
+    <p><a href="https://vk.com/63remontkv?z=album-175983542_259221831" target="_blank" style="font-weight:600;color:var(--accent)">Открыть альбом «Ремонт квартир Самара» →</a></p>
+    <p style="font-size:13px;color:#555;margin-top:8px">Работы разных годов: косметический, комплексный, капитальный ремонт, гипсокартон, плитка, ламинат.</p>
+  </div>
 </div>
 
 <script>
@@ -117,6 +123,11 @@
     const tile  = document.getElementById('tile').checked;
     const gips  = document.getElementById('gips').checked;
     const elec  = document.getElementById('elec').checked;
+    const toilet= document.getElementById('toilet').checked;
+    const sink  = document.getElementById('sink').checked;
+    const bath  = document.getElementById('bath').checked;
+    const box   = document.getElementById('box').checked;
+    const slopes= document.getElementById('slopes').checked;
 
     const wallArea = Math.ceil(area*2.5*height); // примерное кол-во м² стен
     const perimeter= Math.ceil(Math.sqrt(area)*4*rooms); // примерный периметр
@@ -142,12 +153,12 @@
     if(elec){
       items.push(['Замена розеток',     rooms*3+' шт.',  PRICES.socket+' ₽/шт.',  rooms*3*PRICES.socket]);
     }
-    // типовые сантех-работы
-    items.push(['Установка унитаза',   '1 шт.',        PRICES.toilet+' ₽',       PRICES.toilet]);
-    items.push(['Установка раковины',  '1 шт.',        PRICES.sink+' ₽',         PRICES.sink]);
-    items.push(['Установка ванны',     '1 шт.',        PRICES.bath+' ₽',         PRICES.bath]);
-    items.push(['Короб ГКЛ',           '1 компл.',     PRICES.box+' ₽',          PRICES.box]);
-    items.push(['Откосы окон/дверей',  '1 компл.',     PRICES.slope+' ₽',        PRICES.slope]);
+    // --- только если выбрано ---
+    if(bath)   items.push(['Установка ванны',     '1 шт.', PRICES.bath+' ₽',   PRICES.bath]);
+    if(toilet) items.push(['Установка унитаза',   '1 шт.', PRICES.toilet+' ₽', PRICES.toilet]);
+    if(sink)   items.push(['Установка раковины',  '1 шт.', PRICES.sink+' ₽',   PRICES.sink]);
+    if(box)    items.push(['Короб ГКЛ',           '1 компл.', PRICES.box+' ₽', PRICES.box]);
+    if(slopes) items.push(['Откосы окон/дверей',  '1 компл.', PRICES.slope+' ₽',PRICES.slope]);
 
     // итог
     let total = items.reduce((s,i)=>s+i[3],0);
