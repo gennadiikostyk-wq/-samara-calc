@@ -2,122 +2,67 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Калькулятор ремонта квартир Самара – эконом-класс, цена за м²</title>
-  <meta name="description" content="Рассчитайте стоимость ремонта квартиры в Самаре: косметический от 2 000 ₽/м², комплексный от 3 500 ₽/м², капитальный от 5 000 ₽/м². Бесплатный выезд мастера, оплата по факту, материалы Леруа Мерлен.">
-  <meta name="keywords" content="ремонт квартир Самара, цена за м², калькулятор ремонта, косметический ремонт, капитальный ремонт, ремонт под ключ">
+  <title>Калькулятор ремонта квартир Самара – цена за м²</title>
+  <meta name="description" content="Быстрый расчёт стоимости ремонта квартиры в Самаре: косметический от 2 000 ₽/м², комплексный от 3 500 ₽/м², капитальный от 5 000 ₽/м². Онлайн-калькулятор.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Open Graph для красивого сниппета в ВК -->
-  <meta property="og:title" content="Калькулятор ремонта квартир в Самаре – считайте онлайн">
-  <meta property="og:description" content="Косметический от 2 000 ₽/м², капитальный от 5 000 ₽/м². Бесплатный выезд мастера.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://i.imgur.com/0dH2dMF.jpg"><!-- любое превью -->
   <style>
     :root{--accent:#ff6200;--dark:#222}
     body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;margin:0;background:#f7f7f7;color:var(--dark)}
     header{background:var(--accent);color:#fff;padding:24px 16px;text-align:center}
     h1{margin:0;font-size:26px}h2{margin-top:0}
-    .wrap{max-width:960px;margin:auto;padding:16px}
-    .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-    .card{background:#fff;border-radius:10px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+    .wrap{max-width:600px;margin:auto;padding:16px}
+    .card{background:#fff;border-radius:10px;padding:24px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
     label{display:block;margin-bottom:6px;font-weight:600}
     input,select{width:100%;padding:10px;border:1px solid #bbb;border-radius:6px;font-size:16px;margin-bottom:12px}
     button.calc-btn{width:100%;padding:14px;font-size:18px;border:none;border-radius:6px;background:var(--accent);color:#fff;cursor:pointer}
     button.calc-btn:hover{background:#e55a00}
-    .result{font-size:22px;margin-top:12px}
-    .portfolio{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
-    .portfolio img{width:100%;max-width:220px;border-radius:8px}
-    .seo-text{line-height:1.6;margin-top:24px;font-size:15px;color:#444}
+    .result{font-size:22px;margin-top:12px;font-weight:700}
+    .note{font-size:14px;color:#555;margin-top:8px}
   </style>
 </head>
 <body>
 <header>
   <h1>Калькулятор ремонта квартир в Самаре</h1>
-  <p>Эконом-класс. Оплата по факту. Бесплатный выезд мастера.</p>
+  <p>Эконом-класс. Фиксированная цена за м². Оплата по факту.</p>
 </header>
 
 <div class="wrap">
-  <div class="grid">
-    <!-- Карточка 1: параметры -->
-    <div class="card">
-      <h2>1. Параметры квартиры</h2>
-      <label>Тип ремонта</label>
-      <select id="type">
-        <option value="2000">Косметический – 2 000 ₽/м²</option>
-        <option value="3500">Комплексный – 3 500 ₽/м²</option>
-        <option value="5000">Капитальный – 5 000 ₽/м²</option>
-      </select>
+  <div class="card">
+    <h2>1. Параметры квартиры</h2>
 
-      <label>Общая площадь, м²</label>
-      <input type="number" id="area" placeholder="например, 42" min="1">
+    <label>Тип ремонта</label>
+    <select id="type">
+      <option value="2000">Косметический – 2 000 ₽/м²</option>
+      <option value="3500">Комплексный – 3 500 ₽/м²</option>
+      <option value="5000">Капитальный – 5 000 ₽/м²</option>
+    </select>
 
-      <label>Количество комнат</label>
-      <input type="number" id="rooms" placeholder="1" min="1" max="5">
+    <label>Общая площадь квартиры, м²</label>
+    <input type="number" id="area" placeholder="например, 42" min="1">
 
-      <label>Высота потолков, м</label>
-      <input type="number" id="height" placeholder="2.5" min="2" max="4" step="0.1">
+    <button class="calc-btn" onclick="calculate()">Рассчитать стоимость</button>
 
-      <button class="calc-btn" onclick="calculate()">Рассчитать стоимость</button>
-
-      <div id="result" class="result"></div>
-    </div>
-
-    <!-- Карточка 2: материалы -->
-    <div class="card">
-      <h2>2. Пример расхода материалов (Леруа Мерлен)</h2>
-      <p>Для квартиры <span id="area2">___</span> м²</p>
-      <ul id="materials"></ul>
-      <small>Точный лист закупки мастер составит после замера.</small>
-    </div>
-  </div>
-
-  <!-- Портфолио -->
-  <div class="card" style="margin-top:20px">
-    <h2>3. Наши работы</h2>
-    <div class="portfolio">
-      <img src="https://i.imgur.com/JKcYrXL.jpg" alt="Косметический ремонт трешки, Самара">
-      <img src="https://i.imgur.com/8pVcO3J.jpg" alt="Капитальный ремонт в новостройке">
-      <img src="https://i.imgur.com/5tZBRKk.jpg" alt="Ремонт комнаты под ключ">
-    </div>
-  </div>
-
-  <!-- SEO-текст -->
-  <div class="card seo-text">
-    <h2>Ремонт квартир эконом-класса в Самаре</h2>
-    <p>Работаем без посредников: бригада прорабов с опытом от 8 лет. Фиксируем цену в договоре – никаких «допов» по ходу работы. Закупаем материалы в Леруа Мерлен: чеки и гарантии сохраняем. Оплата по факту выполненных этапов: 40% после черновых, 40% после чистовых, 20% после приёмки. Бесплатный выезд мастера и составление сметы в течение 24 часов после звонка. Гарантия 2 года.</p>
+    <div id="result" class="result"></div>
+    <div class="note">Итоговая цена формируется после бесплатного выезда мастера и уточнения объёмов.</div>
   </div>
 </div>
 
 <script>
-  // простой калькулятор
   function calculate(){
-    const rate  = +document.getElementById('type').value;
-    const area  = +document.getElementById('area').value;
-    const rooms = +document.getElementById('rooms').value;
-    const height= +document.getElementById('height').value||2.5;
+    const rate = +document.getElementById('type').value;
+    const area = +document.getElementById('area').value;
 
     if(!area){alert('Укажите площадь');return}
 
-    const wallArea = (area*2.5)*height; // приблизительно
-    const total    = area*rate;
-    const discount = area>60? 0.95 : 1; // скидка 5% от 60 м²
-    const final    = Math.round(total*discount);
+    const total = area * rate;
+    const discount = area > 60 ? 0.95 : 1;
+    const final = Math.round(total * discount);
 
     document.getElementById('result').innerHTML =
-      `≈ ${final.toLocaleString('ru')} ₽ за всю квартиру<br>
-       (${rooms}-к кв, ${area} м², стены ~${Math.round(wallArea)} м²)`;
-
-    // материалы
-    document.getElementById('area2').textContent = area;
-    const mats = [
-      `Шпаклёвка: ~${Math.ceil(wallArea*0.9)} кг`,
-      `Грунтовка: ~${Math.ceil(wallArea/8)} л`,
-      `Клей для плитки: ~${Math.ceil(area*3)} кг`,
-      `Обои: ~${Math.ceil(wallArea/5)} рулонов`,
-      `Ламинат: ~${Math.ceil(area*1.1)} м²`,
-      `Плинтус: ~${Math.ceil(area*0.4)} м`
-    ];
-    document.getElementById('materials').innerHTML = mats.map(m=>`<li>${m}</li>`).join('');
+      `≈ ${final.toLocaleString('ru')} ₽ за всю квартиру`;
   }
 </script>
 </body>
 </html>
+ commit-message:
+убрал расчёт стен и материалов
