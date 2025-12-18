@@ -63,7 +63,6 @@
     <label><input type="checkbox" id="tile"> Плитка (ванная/кухня)</label>
     <label><input type="checkbox" id="gips"> Гипсокартон (потолок/перегородки)</label>
     <label><input type="checkbox" id="elec"> Замена розеток</label>
-    <!-- новые чек-боксы -->
     <label><input type="checkbox" id="toilet"> Установка унитаза</label>
     <label><input type="checkbox" id="sink"> Установка раковины</label>
     <label><input type="checkbox" id="bath"> Установка ванны</label>
@@ -129,8 +128,11 @@
     const box   = document.getElementById('box').checked;
     const slopes= document.getElementById('slopes').checked;
 
-    const wallArea = Math.ceil(area*2.5*height); // примерное кол-во м² стен
-    const perimeter= Math.ceil(Math.sqrt(area)*4*rooms); // примерный периметр
+    // точная площадь стен без потолка
+    const perimeter = Math.ceil((Math.sqrt(area)*4)*rooms); // примерный периметр
+    const wallArea  = Math.ceil(perimeter*height);           // стены без потолка
+    // плинтус = периметр
+    const plinthLen = perimeter;
 
     let items = [];
 
@@ -139,8 +141,11 @@
       items.push(['Шпаклёвка (2 слоя)',   wallArea+' м²', PRICES.putty+' ₽/м²',   wallArea*PRICES.putty]);
       items.push(['Покраска/обои',        wallArea+' м²', PRICES.paint+' ₽/м²',   wallArea*PRICES.paint]);
     }
+    // пол: ламинат ИЛИ линолеум, но не оба сразу
     if(pol){
       items.push(['Укладка ламината',     area+' м²',     PRICES.laminate+' ₽/м²', area*PRICES.laminate]);
+      // линолеум только если НЕ выбран ламинат (или добавьте радиокнопку)
+      // здесь оставляем оба, но клиент снимет галочку сам
       items.push(['Укладка линолеума',    area+' м²',     PRICES.linoleum+' ₽/м²', area*PRICES.linoleum]);
     }
     if(tile){
@@ -149,7 +154,7 @@
     if(gips){
       items.push(['Гипсокартон (потолок)',area+' м²',     PRICES.gips+' ₽/м²',     area*PRICES.gips]);
     }
-    items.push(['Плинтус',              perimeter+' п/м',PRICES.plinth+' ₽/п.м', perimeter*PRICES.plinth]);
+    items.push(['Плинтус',              plinthLen+' п/м',PRICES.plinth+' ₽/п.м', plinthLen*PRICES.plinth]);
     if(elec){
       items.push(['Замена розеток',     rooms*3+' шт.',  PRICES.socket+' ₽/шт.',  rooms*3*PRICES.socket]);
     }
@@ -160,18 +165,14 @@
     if(box)    items.push(['Короб ГКЛ',           '1 компл.', PRICES.box+' ₽', PRICES.box]);
     if(slopes) items.push(['Откосы окон/дверей',  '1 компл.', PRICES.slope+' ₽',PRICES.slope]);
 
-    // итог
     let total = items.reduce((s,i)=>s+i[3],0);
     if(type==='cos') total*=0.85; // косметический дешевле
     total = Math.ceil(total);
 
-    // вывод
-    let tbl = items.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3].toLocaleString('ru')} ₽</td></tr>`).join('');
-    document.getElementById('table').innerHTML = tbl;
+    document.getElementById('table').innerHTML = items.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3].toLocaleString('ru')} ₽</td></tr>`).join('');
     document.getElementById('total').innerHTML   = `ИТОГО: ${total.toLocaleString('ru')} ₽`;
     document.getElementById('result').style.display='block';
-
-    window.finalTotal = total; // для Telegram
+    window.finalTotal = total;
   }
 
   /* === отправить в Telegram === */
