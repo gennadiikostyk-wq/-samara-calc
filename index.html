@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Рассчитать стоимость ремонта квартиры в Самаре – Онлайн-калькулятор сметы</title>
-  <meta name="description" content="Онлайн калькулятор ремонта квартир в Самаре. Рассчитайте точную стоимость отделки стен, поклейки обоев, укладки ламината, плитки и штукатурки по актуальным ценам за 30 секунд. Бесплатный выезд мастера на замер!">
+  <meta name="description" content="Онлайн калькулятор ремонта квартир в Самаре. Рассчитайте точную стоимость отделки стен, поклейки обоев, укладки ламината, плитки и штукатурки по актуальным ценам за 30 секунд. Измерения пола и стен раздельно.">
   <meta name="keywords" content="ремонт квартир самара, рассчитать ремонт квартиры, стоимость ремонта самара, калькулятор ремонта онлайн, отделка квартир самара цены">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
@@ -18,8 +18,8 @@
     .card h2{margin-top:0;font-size:20px;color:var(--dark);border-bottom:2px solid #eee;padding-bottom:8px}
     .card h3{font-size:18px;margin:20px 0 10px 0}
     .card p{font-size:15px;color:#444}
-    label{display:block;margin-bottom:10px;font-weight:600;font-size:16px;cursor:pointer}
-    input[type="number"]{width:100%;padding:12px;border:1px solid #bbb;border-radius:6px;font-size:16px;margin-bottom:15px;box-sizing:border-box}
+    label{display:block;margin-bottom:8px;font-weight:600;font-size:15px;cursor:pointer}
+    input[type="number"], select {width:100%;padding:12px;border:1px solid #bbb;border-radius:6px;font-size:16px;margin-bottom:15px;box-sizing:border-box}
     input[type="checkbox"]{width:18px;height:18px;margin-right:10px;vertical-align:middle}
     button.calc-btn{width:100%;padding:15px;font-size:18px;font-weight:700;border:none;border-radius:6px;background:var(--accent);color:#fff;cursor:pointer;transition:background 0.2s}
     button.calc-btn:hover{background:#e55a00}
@@ -32,6 +32,9 @@
     td:last-child{text-align:right;font-weight:700}
     .total{font-size:22px;font-weight:700;margin-top:15px;padding-top:10px;border-top:2px solid var(--accent);color:var(--dark)}
     .note{font-size:13px;color:#666;margin-top:12px;font-style:italic}
+    .grid-inputs {display: flex; gap: 15px;}
+    .grid-inputs div {flex: 1;}
+    @media (max-width: 480px) {.grid-inputs {flex-direction: column; gap: 0;}}
   </style>
 </head>
 <body>
@@ -45,29 +48,48 @@
 
   <div class="card">
     <h2>Сколько стоит ремонт квартиры в Самаре?</h2>
-    <p>Планируете обновить интерьер или сделать капитальную отделку под ключ? Наш онлайн-калькулятор поможет вам узнать предварительную стоимость отделочных работ. Мы выполняем качественный косметический, комплексный и эконом-ремонт жилья по честным ценам.</p>
+    <p>Планируете обновить интерьер или сделать капитальную отделку под ключ? Наш онлайн-калькулятор поможет вам узнать предварительную стоимость отделочных работ отдельно по полу и стенам. Мы выполняем качественный косметический, комплексный и эконом-ремонт жилья по честным ценам.</p>
     <button class="calc-btn album-btn" onclick="window.open('https://vk.com/63remontkv?z=album-175983542_259221831', '_blank')">Посмотреть фото наших работ в ВК →</button>
   </div>
 
   <div class="card">
-    <h2>1. Параметры вашей квартиры</h2>
-    <label>Укажите общую площадь (м²):</label>
-    <input type="number" id="area" placeholder="Например: 45" min="1">
+    <h2>1. Параметры вашего ремонта</h2>
     
-    <h3>Выберите необходимые работы:</h3>
-    <label><input type="checkbox" id="grunt" checked> Грунтовка стен и потолка (100 ₽/м²)</label>
-    <label><input type="checkbox" id="shpak" checked> Шпаклевка под обои/покраску (350 ₽/м²)</label>
-    <label><input type="checkbox" id="shtuk"> Штукатурка по маякам (от 500 ₽/м²)</label>
+    <label>Тип ремонта (под ключ):</label>
+    <select id="repairType">
+      <option value="none">Выбрать отдельные работы (без тарифа)</option>
+      <option value="cosmetic">Косметический ремонт (от 2 000 ₽/м² пола)</option>
+      <option value="complex">Комплексный ремонт (от 5 000 ₽/м² пола)</option>
+    </select>
 
-Ремонт Самара | Отделка Поклейка Обоев, [24.05.2026 17:22]
-<label><input type="checkbox" id="paintWall"> Покраска стен (350 ₽/м²)</label>
-    <label><input type="checkbox" id="paintCeil"> Покраска потолка (400 ₽/м²)</label>
+Ремонт Самара | Отделка Поклейка Обоев, [24.05.2026 18:00]
+<div class="grid-inputs">
+      <div>
+        <label>Площадь ПОЛА (м²):</label>
+        <input type="number" id="floorArea" placeholder="Например: 7" min="0">
+      </div>
+      <div>
+        <label>Площадь СТЕН (м²):</label>
+        <input type="number" id="wallArea" placeholder="Например: 40" min="0">
+      </div>
+    </div>
+    
+    <h3>Работы по СТЕНАМ и ПОТОЛКУ:</h3>
+    <label><input type="checkbox" id="grunt"> Грунтовка стен (100 ₽/м²)</label>
+    <label><input type="checkbox" id="shpak"> Шпаклевка под обои/покраску (350 ₽/м²)</label>
+    <label><input type="checkbox" id="shtuk"> Штукатурка по маякам (от 500 ₽/м²)</label>
+    <label><input type="checkbox" id="paintWall"> Покраска стен (350 ₽/м²)</label>
+    <label><input type="checkbox" id="paintCeil"> Покраска потолка (400 ₽/м² пола)</label>
     <label><input type="checkbox" id="panel"> Монтаж пластиковых панелей ПВХ (от 500 ₽/м²)</label>
-    <label><input type="checkbox" id="oboi" checked> Поклейка обоев (250 ₽/м²)</label>
-    <label><input type="checkbox" id="lam" checked> Укладка ламината (500 ₽/м²)</label>
+    <label><input type="checkbox" id="oboi"> Поклейка обоев (250 ₽/м²)</label>
+    
+    <h3>Работы по ПОЛУ:</h3>
+    <label><input type="checkbox" id="lam"> Укладка ламината (500 ₽/м²)</label>
     <label><input type="checkbox" id="lin"> Укладка линолеума (350 ₽/м²)</label>
-    <label><input type="checkbox" id="plint" checked> Установка плинтусов напольных/потолочных (350 ₽/м²)</label>
-    <label><input type="checkbox" id="plitka"> Укладка плитки (от 2000 ₽/м²)</label>
+    <label><input type="checkbox" id="plint"> Установка плинтусов напольных/потолочных (350 ₽/м² пола)</label>
+    <label><input type="checkbox" id="plitka"> Укладка плитки (от 2000 ₽/м² пола)</label>
+    
+    <h3>Дополнительно (откосы):</h3>
     <label><input type="checkbox" id="otkWindow"> Откосы оконные (от 2500 ₽/компл.)</label>
     <label><input type="checkbox" id="otkDoor"> Откосы дверные (3500 ₽/компл.)</label>
     
@@ -87,29 +109,48 @@
 
 <script>
   function estimate(){
-    var area = +document.getElementById('area').value;
-    if(!area || area <= 0){
-      alert('Пожалуйста, введите корректную площадь квартиры в м²'); 
+    var floorArea = +document.getElementById('floorArea').value || 0;
+    var wallArea = +document.getElementById('wallArea').value || 0;
+    var repairType = document.getElementById('repairType').value;
+    
+    if(floorArea <= 0 && wallArea <= 0 && repairType === 'none'){
+      alert('Пожалуйста, введите площадь пола или стен для расчета.'); 
       return;
     }
     
     var items = [];
     var total = 0;
 
-    // Расчет позиций на основе площади м² или фиксированной цены
-    if(document.getElementById('grunt').checked) { items.push(['Грунтовка стен/потолка', area * 100]); total += area * 100; }
-    if(document.getElementById('shpak').checked) { items.push(['Шпаклевка стен', area * 350]); total += area * 350; }
-    if(document.getElementById('shtuk').checked) { items.push(['Штукатурка по маякам', area * 500]); total += area * 500; }
-    if(document.getElementById('paintWall').checked) { items.push(['Покраска стен', area * 350]); total += area * 350; }
-    if(document.getElementById('paintCeil').checked) { items.push(['Покраска потолка', area * 400]); total += area * 400; }
-    if(document.getElementById('panel').checked) { items.push(['Монтаж панелей ПВХ', area * 500]); total += area * 500; }
-    if(document.getElementById('oboi').checked) { items.push(['Поклейка обоев', area * 250]); total += area * 250; }
-    if(document.getElementById('lam').checked) { items.push(['Укладка ламината', area * 500]); total += area * 500; }
-    if(document.getElementById('lin').checked) { items.push(['Укладка линолеума', area * 350]); total += area * 350; }
-    if(document.getElementById('plint').checked) { items.push(['Установка плинтусов', area * 350]); total += area * 350; }
-    if(document.getElementById('plitka').checked) { items.push(['Укладка плитки', area * 2000]); total += area * 2000; }
+    // Расчет тарифов ремонта под ключ (считается от площади пола)
+    if(repairType === 'cosmetic') {
+      if(floorArea <= 0) { alert('Для расчета косметического ремонта укажите площадь пола.'); return; }
+      items.push(['Косметический ремонт под ключ', floorArea * 2000]);
+      total += floorArea * 2000;
+    }
+    if(repairType === 'complex') {
+      if(floorArea <= 0) { alert('Для расчета комплексного ремонта укажите площадь пола.'); return; }
+      items.push(['Комплексный ремонт под ключ', floorArea * 5000]);
+      total += floorArea * 5000;
+    }
+
+    // Расчет позиций ПО СТЕНАМ
+    if(document.getElementById('grunt').checked) { items.push(['Грунтовка стен (по стенам)', wallArea * 100]); total += wallArea * 100; }
+    if(document.getElementById('shpak').checked) { items.push(['Шпаклевка стен (по стенам)', wallArea * 350]); total += wallArea * 350; }
+    if(document.getElementById('shtuk').checked) { items.push(['Штукатурка по маякам (по стенам)', wallArea * 500]); total += wallArea * 500; }
+    if(document.getElementById('paintWall').checked) { items.push(['Покраска стен (по стенам)', wallArea * 350]); total += wallArea * 350; }
+
+Ремонт Самара | Отделка Поклейка Обоев, [24.05.2026 18:00]
+if(document.getElementById('panel').checked) { items.push(['Монтаж панелей ПВХ (по стенам)', wallArea * 500]); total += wallArea * 500; }
+    if(document.getElementById('oboi').checked) { items.push(['Поклейка обоев (по стенам)', wallArea * 250]); total += wallArea * 250; }
     
-    // Фиксированная стоимость за комплекты отделки откосов
+    // Расчет позиций ПО ПОЛУ (и потолку)
+    if(document.getElementById('paintCeil').checked) { items.push(['Покраска потолка (по полу)', floorArea * 400]); total += floorArea * 400; }
+    if(document.getElementById('lam').checked) { items.push(['Укладка ламината (по полу)', floorArea * 500]); total += floorArea * 500; }
+    if(document.getElementById('lin').checked) { items.push(['Укладка линолеума (по полу)', floorArea * 350]); total += floorArea * 350; }
+    if(document.getElementById('plint').checked) { items.push(['Установка плинтусов (по полу)', floorArea * 350]); total += floorArea * 350; }
+    if(document.getElementById('plitka').checked) { items.push(['Укладка плитки (по полу)', floorArea * 2000]); total += floorArea * 2000; }
+    
+    // Фиксированная стоимость за откосы
     if(document.getElementById('otkWindow').checked) { items.push(['Откосы оконные (компл.)', 2500]); total += 2500; }
     if(document.getElementById('otkDoor').checked) { items.push(['Откосы дверные (компл.)', 3500]); total += 3500; }
 
