@@ -50,7 +50,6 @@
     .total{font-size:22px;font-weight:700;margin-top:15px;padding-top:10px;border-top:2px solid var(--accent);color:var(--dark)}
     .note{font-size:13px;color:#666;margin-top:12px;font-style:italic}
     
-    /* Красивый блок для ошибок вместо ломающих экран алертов */
     .error-box {
       display: none;
       background: #f2dede;
@@ -83,7 +82,7 @@
     <a href="https://vk.com/remontkv_samara?z=album-175983542_259221831" target="_blank" class="calc-btn album-btn">Посмотреть фото наших работ в ВК →</a>
   </div>
 
-Ремонт Самара | Отделка Поклейка Обоев, [24.05.2026 19:52]
+Ремонт Самара | Отделка Поклейка Обоев, [24.05.2026 20:04]
 <div class="card">
     <h2>1. Параметры вашего ремонта</h2>
     
@@ -145,17 +144,24 @@
     var errorBlock = document.getElementById('errorBlock');
     var resultBlock = document.getElementById('result');
     
-    // Сбрасываем старые состояния при повторном клике
     errorBlock.style.display = 'none';
     resultBlock.style.display = 'none';
     
-    var floorArea = +document.getElementById('floorArea').value || 0;
-    var wallArea = +document.getElementById('wallArea').value || 0;
+    // Получаем значения полей ввода
+    var floorInput = document.getElementById('floorArea').value;
+    var wallInput = document.getElementById('wallArea').value;
     var repairType = document.getElementById('repairType').value;
     
-    // Проверка на заполнение полей площадей
+    // Преобразуем строго в числа. Если пусто или буквы — будет 0
+    var floorArea = parseFloat(floorInput);
+    if (isNaN(floorArea) || floorArea < 0) { floorArea = 0; }
+    
+    var wallArea = parseFloat(wallInput);
+    if (isNaN(wallArea) || wallArea < 0) { wallArea = 0; }
+    
+    // Проверка: если вообще ничего не заполнено
     if(floorArea <= 0 && wallArea <= 0 && repairType === 'none'){
-      errorBlock.innerHTML = 'Пожалуйста, укажите площадь пола или стен для проведения расчетов.';
+      errorBlock.innerHTML = 'Пожалуйста, введите площадь пола или стен для расчета.';
       errorBlock.style.display = 'block';
       return;
     }
@@ -163,21 +169,21 @@
     var items = [];
     var total = 0;
 
-    // Расчет комплексных тарифов ремонта под ключ (считаются строго от площади пола)
-    if(repairType === 'cosmetic') {
-      if(floorArea <= 0) { 
-        errorBlock.innerHTML = 'Для расчета косметического ремонта под ключ обязательно укажите площадь ПОЛА.'; 
-        errorBlock.style.display = 'block';
+    // Расчет тарифов ремонта под ключ (считается ТОЛЬКО по полу)
 
-Ремонт Самара | Отделка Поклейка Обоев, [24.05.2026 19:52]
-return; 
+Ремонт Самара | Отделка Поклейка Обоев, [24.05.2026 20:04]
+if(repairType === 'cosmetic') {
+      if(floorArea <= 0) { 
+        errorBlock.innerHTML = 'Для расчета косметического ремонта укажите площадь ПОЛА.'; 
+        errorBlock.style.display = 'block';
+        return; 
       }
       items.push(['Косметический ремонт под ключ', floorArea * 2000]);
       total += floorArea * 2000;
     }
     if(repairType === 'complex') {
       if(floorArea <= 0) { 
-        errorBlock.innerHTML = 'Для расчета комплексного ремонта под ключ обязательно укажите площадь ПОЛА.'; 
+        errorBlock.innerHTML = 'Для расчета комплексного ремонта укажите площадь ПОЛА.'; 
         errorBlock.style.display = 'block';
         return; 
       }
@@ -185,56 +191,54 @@ return;
       total += floorArea * 5000;
     }
 
-    // Расчет позиций, привязанных к площади СТЕН
-    if(document.getElementById('grunt').checked) { items.push(['Грунтовка стен (по стенам)', wallArea * 100]); total += wallArea * 100; }
-    if(document.getElementById('shpak').checked) { items.push(['Шпаклевка стен (по стенам)', wallArea * 350]); total += wallArea * 350; }
-    if(document.getElementById('shtuk').checked) { items.push(['Штукатурка по маякам (по стенам)', wallArea * 500]); total += wallArea * 500; }
-    if(document.getElementById('paintWall').checked) { items.push(['Покраска стен (по стенам)', wallArea * 350]); total += wallArea * 350; }
-    if(document.getElementById('panel').checked) { items.push(['Монтаж панелей ПВХ (по стенам)', wallArea * 500]); total += wallArea * 500; }
-    if(document.getElementById('oboi').checked) { items.push(['Поклейка обоев (по стенам)', wallArea * 250]); total += wallArea * 250; }
+    // Расчет позиций ПО СТЕНАМ (считаем только если введена площадь стен > 0)
+    if(wallArea > 0) {
+      if(document.getElementById('grunt').checked) { items.push(['Грунтовка стен (по стенам)', wallArea * 100]); total += wallArea * 100; }
+      if(document.getElementById('shpak').checked) { items.push(['Шпаклевка стен (по стенам)', wallArea * 350]); total += wallArea * 350; }
+      if(document.getElementById('shtuk').checked) { items.push(['Штукатурка по маякам (по стенам)', wallArea * 500]); total += wallArea * 500; }
+      if(document.getElementById('paintWall').checked) { items.push(['Покраска стен (по стенам)', wallArea * 350]); total += wallArea * 350; }
+      if(document.getElementById('panel').checked) { items.push(['Монтаж панелей ПВХ (по стенам)', wallArea * 500]); total += wallArea * 500; }
+      if(document.getElementById('oboi').checked) { items.push(['Поклейка обоев (по стенам)', wallArea * 250]); total += wallArea * 250; }
+    }
     
-    // Расчет позиций, привязанных к площади ПОЛА
-    if(document.getElementById('paintCeil').checked) { items.push(['Покраска потолка (по полу)', floorArea * 400]); total += floorArea * 400; }
-    if(document.getElementById('lam').checked) { items.push(['Укладка ламината (по полу)', floorArea * 500]); total += floorArea * 500; }
-    if(document.getElementById('lin').checked) { items.push(['Укладка линолеума (по полу)', floorArea * 350]); total += floorArea * 350; }
-    if(document.getElementById('plint').checked) { items.push(['Установка плинтусов (по полу)', floorArea * 350]); total += floorArea * 350; }
-    if(document.getElementById('plitka').checked) { items.push(['Укладка плитки (по полу)', floorArea * 2000]); total += floorArea * 2000; }
+    // Расчет позиций ПО ПОЛУ (считаем только если введена площадь пола > 0)
+    if(floorArea > 0) {
+      if(document.getElementById('paintCeil').checked) { items.push(['Покраска потолка (по полу)', floorArea * 400]); total += floorArea * 400; }
+      if(document.getElementById('lam').checked) { items.push(['Укладка ламината (по полу)', floorArea * 500]); total += floorArea * 500; }
+      if(document.getElementById('lin').checked) { items.push(['Укладка линолеума (по полу)', floorArea * 350]); total += floorArea * 350; }
+      if(document.getElementById('plint').checked) { items.push(['Установка плинтусов (по полу)', floorArea * 350]); total += floorArea * 350; }
+      if(document.getElementById('plitka').checked) { items.push(['Укладка плитки (по полу)', floorArea * 2000]); total += floorArea * 2000; }
+    }
     
-    // Позиции с фиксированной ценой за комплект
+    // Фиксированные позиции (откосы) — не зависят от площадей
     if(document.getElementById('otkWindow').checked) { items.push(['Откосы оконные (компл.)', 2500]); total += 2500; }
     if(document.getElementById('otkDoor').checked) { items.push(['Откосы дверные (компл.)', 3500]); total += 3500; }
 
-    // Проверка: заполнили ли чекбоксы при ручном выборе работ
+    // Проверка на случай, если площади ввели, но ничего не выбрали
     if(items.length === 0 && repairType === 'none') {
-      errorBlock.innerHTML = 'Вы заполнили площадь, но не выбрали ни одну из услуг ниже (не поставили галочки).';
+      errorBlock.innerHTML = 'Вы указали площадь, но не выбрали ни один вид работ (не поставлены галочки).';
       errorBlock.style.display = 'block';
       return;
     }
 
-    // Неубиваемая функция ручного форматирования чисел (без вызова ломающих toLocaleString)
-    function moneyFormat(num) {
-      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + ' ₽';
-    }
+    // Безопасное разделение чисел пробелами (1000 -> 1 000)
+    var totalStr = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-    // Формируем строчки таблицы результатов
     var tableHTML = '';
     for(var i = 0; i < items.length; i++){
-      tableHTML += '<tr><td>' + items[i][0] + '</td><td>' + moneyFormat(items[i][1]) + '</td></tr>';
+      var itemPriceStr = items[i][1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      tableHTML += '<tr><td>' + items[i][0] + '</td><td>' + itemPriceStr + ' ₽</td></tr>';
     }
     
     document.getElementById('table').innerHTML = tableHTML;
-    document.getElementById('total').innerHTML = 'ИТОГО: ' + moneyFormat(total);
+    document.getElementById('total').innerHTML = 'ИТОГО: ' + totalStr + ' ₽';
     
-    // Показываем блок со сметой
     resultBlock.style.display = 'block';
     
-    // Безопасный скролл вниз к результатам
-    setTimeout(function(){
-      if(resultBlock.scrollIntoView) {
-        try { resultBlock.scrollIntoView({ behavior: 'smooth' }); } 
-        catch(e) { resultBlock.scrollIntoView(); }
-      }
-    }, 40);
+    // Прокрутка экрана к результату
+    if(resultBlock.scrollIntoView) {
+      resultBlock.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 </script>
 </body>
