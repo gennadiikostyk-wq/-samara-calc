@@ -1,233 +1,177 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <title>Рассчитать стоимость ремонта квартиры в Самаре – Онлайн-калькулятор сметы</title>
-  <meta name="description" content="Онлайн калькулятор ремонта квартир в Самаре. Рассчитайте точную стоимость отделки стен, поклейки обоев, укладки ламината, плитки и штукатурки по актуальным ценам за 30 секунд. Измерения пола и стен раздельно.">
-  <meta name="keywords" content="ремонт квартир самара, рассчитать ремонт квартиры, стоимость ремонта самара, калькулятор ремонта онлайн, отделка квартир самара цены">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор ремонта — Эконом ремонт в Самаре</title>
   <style>
-    :root{--accent:#ff6200;--dark:#222;--bg:#f7f7f7}
-    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--dark);line-height:1.5}
-    header{background:var(--accent);color:#fff;padding:25px 16px;text-align:center}
-    header h1{margin:0;font-size:24px;font-weight:700}
-    header p{margin:5px 0 0 0;font-size:15px;opacity:0.9}
-    .wrap{max-width:720px;margin:auto;padding:16px}
-    .card{background:#fff;border-radius:10px;padding:20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-    .card h2{margin-top:0;font-size:20px;color:var(--dark);border-bottom:2px solid #eee;padding-bottom:8px}
-    .card h3{font-size:18px;margin:20px 0 10px 0}
-    .card p{font-size:15px;color:#444}
-    label{display:block;margin-bottom:8px;font-weight:600;font-size:15px;cursor:pointer}
-    input[type="number"], select {width:100%;padding:12px;border:1px solid #bbb;border-radius:6px;font-size:16px;margin-bottom:15px;box-sizing:border-box}
-    input[type="checkbox"]{width:18px;height:18px;margin-right:10px;vertical-align:middle}
-    
-    .calc-btn {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      font-size: 18px;
-      font-weight: 700;
-      border: none;
-      border-radius: 6px;
-      background: var(--accent);
-      color: #fff!important;
-      cursor: pointer;
-      text-align: center;
-      text-decoration: none;
-      box-sizing: border-box;
-      transition: background 0.2s;
-    }
-    .calc-btn:hover{background:#e55a00}
-    .vk-btn{background:#4c75a3!important;margin-top:12px}
-    .vk-btn:hover{background:#3f628a!important}
-    .album-btn{background:#28a745!important;margin-top:12px}
-    .album-btn:hover{background:#1e7e34!important}
-    
-    table{width:100%;border-collapse:collapse;margin-top:15px}
-    td{padding:10px 8px;text-align:left;border-bottom:1px solid #eee;font-size:15px}
-    td:last-child{text-align:right;font-weight:700}
-    .total{font-size:22px;font-weight:700;margin-top:15px;padding-top:10px;border-top:2px solid var(--accent);color:var(--dark)}
-    .note{font-size:13px;color:#666;margin-top:12px;font-style:italic}
-    
-    .error-box {
-      display: none;
-      background: #f2dede;
-      color: #a94442;
-      border: 1px solid #ebccd1;
-      padding: 12px;
-      border-radius: 6px;
-      margin-bottom: 15px;
-      font-weight: 600;
-      font-size: 14px;
-    }
-    
-    .grid-inputs {display: flex; gap: 15px;}
-    .grid-inputs div {flex: 1;}
-    @media (max-width: 480px) {.grid-inputs {flex-direction: column; gap: 0;}}
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: #f5f5f5; color: #333; padding: 20px; max-width: 600px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 20px; }
+    h1 { font-size: 24px; color: #2c3e50; margin-bottom: 10px; }
+    .subtitle { font-size: 16px; color: #7f8c8d; }
+    .step { display: none; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; animation: fadeIn 0.4s ease-out; }
+    .step.active { display: block; }
+    h2 { font-size: 20px; margin-bottom: 15px; color: #2c3e50; }
+    label { display: block; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; cursor: pointer; }
+    input[type="radio"], input[type="checkbox"] { margin-right: 10px; }
+    input[type="number"], input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; margin-top: 10px; }
+    .qty-input { width: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; margin: 0; }
+    .item-row { display: flex; align-items: center; justify-content: space-between; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; gap: 10px; }
+    .item-row label { border: none; padding: 0; margin: 0; flex: 1; }
+    button { background-color: #3498db; color: white; border: none; padding: 14px 20px; width: 100%; font-size: 16px; border-radius: 8px; cursor: pointer; margin-top: 10px; }
+    .result-box { background-color: #eaf7ff; padding: 20px; border-radius: 12px; text-align: center; margin: 20px 0; }
+    .total-price { font-size: 28px; font-weight: bold; color: #2c3e50; margin: 10px 0; }
+    .details { font-size: 14px; color: #7f8c8d; }
+    .disclaimer { font-size: 13px; color: #c0392b; margin-top: 10px; font-style: italic; }
+    .links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .link-btn { display: block; padding: 16px; text-align: center; color: white; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 500; }
+    .link-btn:active { opacity: 0.8; }
+    .link-btn.telegram { background-color: #0088cc; }
+    .link-btn.whatsapp { background-color: #25D366; }
+    .link-btn.max { background-color: #5b2c8e; }
+    .link-btn.vk { background-color: #4A76A8; }
+    .link-btn.tel { background-color: #2c3e50; }
+    .lock-icon { font-size: 40px; text-align: center; margin-bottom: 10px; }
+    .hidden { display: none; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Калькулятор ремонта</h1>
+    <div class="subtitle">Эконом класс в Самаре</div>
+  </header>
 
-<header>
-  <h1>Ремонт и отделка квартир в Самаре</h1>
-  <p>Профессиональный расчет стоимости работ онлайн за 30 секунд</p>
-</header>
-
-<div class="wrap">
-
-  <div class="card">
-    <h2>Сколько стоит ремонт квартиры в Самаре?</h2>
-    <p>Планируете обновить интерьер или сделать капитальную отделку под ключ? Наш онлайн-калькулятор поможет вам узнать предварительную стоимость отделочных работ отдельно по полу и стенам. Мы выполняем качественный косметический, комплексный и эконом-ремонт жилья по честным ценам.</p>
-    <a href="https://vk.com/remontkv_samara?z=album-175983542_259221831" target="_blank" class="calc-btn album-btn">Посмотреть фото наших работ в ВК →</a>
-  </div>
-
-  <div class="card">
-    <h2>1. Параметры вашего ремонта</h2>
-    
-    <label>Тип ремонта (под ключ):</label>
-    <select id="repairType">
-      <option value="none">Выбрать отдельные работы (без тарифа)</option>
-      <option value="cosmetic">Косметический ремонт (от 2 000 ₽/м² пола)</option>
-      <option value="complex">Комплексный ремонт (от 5 000 ₽/м² пола)</option>
-    </select>
-
-    <div class="grid-inputs">
-      <div>
-        <label>Площадь ПОЛА (м²):</label>
-        <input type="number" id="floorArea" placeholder="Например: 7" min="0">
-      </div>
-      <div>
-        <label>Площадь СТЕН (м²):</label>
-        <input type="number" id="wallArea" placeholder="Например: 40" min="0">
-      </div>
+  <div id="gate" class="step active">
+    <div class="lock-icon">🔒</div>
+    <h2 style="text-align:center;">Калькулятор доступен подписчикам</h2>
+    <p class="details" style="text-align:center;">Подпишитесь на любой из каналов — код доступа выдаю в личку по слову РЕМОНТ.</p>
+    <div class="links">
+      <a href="https://max.ru/channel_econom_remont" class="link-btn max" onclick="openLink(this.href);return false;">Подписаться в Max</a>
+      <a href="https://vk.ru/remontkv_samara" class="link-btn vk" onclick="openLink(this.href);return false;">Подписаться в ВКонтакте</a>
+      <a href="https://t.me/EkonSamara" class="link-btn telegram" onclick="openLink(this.href);return false;">Подписаться в Telegram</a>
     </div>
-    
-    <h3>Работы по СТЕНАМ и ПОТОЛКУ:</h3>
-    <label><input type="checkbox" id="grunt"> ... Грунтовка стен (100 ₽/м²)</label>
-    <label><input type="checkbox" id="shpak"> ... Шпаклевка под обои/покраску (350 ₽/м²)</label>
-    <label><input type="checkbox" id="shtuk"> ... Штукатурка по маякам (от 500 ₽/м²)</label>
-    <label><input type="checkbox" id="paintWall"> ... Покраска стен (350 ₽/м²)</label>
-    <label><input type="checkbox" id="paintCeil"> ... Покраска потолка (400 ₽/м² пола)</label>
-    <label><input type="checkbox" id="panel"> ... Монтаж пластиковых панелей ПВХ (от 500 ₽/м²)</label>
-    <label><input type="checkbox" id="oboi"> ... Поклейка обоев (250 ₽/м²)</label>
-    
-    <h3>Работы по ПОЛУ:</h3>
-    <label><input type="checkbox" id="lam"> ... Укладка ламината (500 ₽/м²)</label>
-    <label><input type="checkbox" id="lin"> ... Укладка линолеума (350 ₽/м²)</label>
-    <label><input type="checkbox" id="plint"> ... Установка плинтусов напольных/потолочных (350 ₽/м² пола)</label>
-    <label><input type="checkbox" id="plitka"> ... Укладка плитки (от 2000 ₽/м² пола)</label>
-    
-    <h3>Дополнительно (откосы):</h3>
-    <label><input type="checkbox" id="otkWindow"> ... Откосы оконные (от 2500 ₽/компл.)</label>
-    <label><input type="checkbox" id="otkDoor"> ... Откосы дверные (3500 ₽/компл.)</label>
-    
-    <div id="errorBlock" class="error-box"></div>
-    
-    <button class="calc-btn" onclick="estimate()">Рассчитать стоимость сметы</button>
+    <input type="text" id="access-code" placeholder="Введите код доступа">
+    <button id="unlock">Открыть калькулятор</button>
   </div>
 
-  <div class="card" id="result" style="display:none">
-    <h2>2. Предварительная смета работ</h2>
-    <table id="table"></table>
-    <div class="total" id="total"></div>
-    <p class="note">* Данный расчет является предварительным. Чтобы узнать точную стоимость отделки с учетом особенностей вашего объекта, свяжитесь с мастером.</p>
-    
-    <a href="https://vk.com/remontkv_samara" target="_blank" class="calc-btn vk-btn">Узнать точную стоимость у мастера в ВК →</a>
+  <div id="step1" class="step">
+    <h2>Выберите тип ремонта</h2>
+    <label><input type="radio" name="repair-type" value="cosmetic" data-price="3000"> Косметический ремонт (3000 ₽/м²)</label>
+    <label><input type="radio" name="repair-type" value="capital" data-price="5000"> Комплексный ремонт (5000 ₽/м²)</label>
+    <label><input type="radio" name="repair-type" value="bathroom" data-price="2000"> Ремонт ванной комнаты (плитка от 2000 ₽/м²)</label>
+    <label><input type="radio" name="repair-type" value="laminate" data-price="500"> Укладка ламината (500 ₽/м²)</label>
+    <button id="next-step1">Далее</button>
   </div>
 
-</div>
+  <div id="step2" class="step">
+    <h2>Введите площадь помещения</h2>
+    <p class="details">(в м²)</p>
+    <input type="number" id="area-input" placeholder="Например: 35" min="1">
+    <button id="next-step2">Далее</button>
+  </div>
 
-<script>
-  function estimate(){
-    var errorBlock = document.getElementById('errorBlock');
-    var resultBlock = document.getElementById('result');
-    
-    errorBlock.style.display = 'none';
-    resultBlock.style.display = 'none';
-    
-    var floorInput = document.getElementById('floorArea').value;
-    var wallInput = document.getElementById('wallArea').value;
-    var repairType = document.getElementById('repairType').value;
-    
-    var floorArea = parseFloat(floorInput);
-    if (isNaN(floorArea) || floorArea < 0) { floorArea = 0; }
-    
-    var wallArea = parseFloat(wallInput);
-    if (isNaN(wallArea) || wallArea < 0) { wallArea = 0; }
-    
-    if(floorArea <= 0 && wallArea <= 0 && repairType === 'none'){
-      errorBlock.innerHTML = 'Пожалуйста, введите площадь пола или стен для расчета.';
-      errorBlock.style.display = 'block';
-      return;
+  <div id="step3" class="step">
+    <h2>Дополнительные работы (по желанию)</h2>
+    <div class="item-row">
+      <label for="sockets-qty">Замена розеток (500 ₽/шт)</label>
+      <input type="number" id="sockets-qty" class="qty-input" placeholder="0" min="0" value="0">
+    </div>
+    <div class="item-row">
+      <label for="plumbing-qty">Сантехника (3000 ₽)</label>
+      <input type="checkbox" id="plumbing-qty" style="width:auto;">
+    </div>
+    <div class="item-row">
+      <label for="trim-qty">Плинтуса (300 ₽/метр)</label>
+      <input type="number" id="trim-qty" class="qty-input" placeholder="0" min="0" value="0">
+    </div>
+    <button id="calculate">Рассчитать стоимость</button>
+  </div>
+
+  <div id="step4" class="step">
+    <div class="result-box">
+      <h2>Итоговая стоимость:</h2>
+      <div class="total-price" id="total-price">— ₽</div>
+      <div class="details" id="min-order-note"></div>
+      <div class="disclaimer">* Сумма примерная, точную стоимость уточняйте у мастера</div>
+    </div>
+    <h3>Связаться с мастером:</h3>
+    <div class="links">
+      <a href="https://golnk.ru/K9NwW" class="link-btn max" onclick="openLink(this.href);return false;">Max</a>
+      <a href="https://wa.me/79178130283" class="link-btn whatsapp" onclick="openLink(this.href);return false;">WhatsApp</a>
+      <a href="tel:+79178130283" class="link-btn tel">Позвонить</a>
+      <a href="https://vk.ru/remontkv_samara" class="link-btn vk" onclick="openLink(this.href);return false;">ВКонтакте</a>
+      <a href="https://t.me/EkonSamara" class="link-btn telegram" onclick="openLink(this.href);return false;">Telegram</a>
+    </div>
+  </div>
+
+  <script>
+    const ACCESS_CODE = 'РЕМОНТ';
+
+    function memGet() { try { return localStorage.getItem('calc_access'); } catch (e) { return null; } }
+    function memSet() { try { localStorage.setItem('calc_access', 'yes'); } catch (e) {} }
+
+    function openLink(url) {
+      try {
+        if (window.top !== window.self) { window.top.location.href = url; return; }
+      } catch (e) {}
+      window.location.href = url;
     }
-    
-    var items = [];
-    var total = 0;
 
-    if(repairType === 'cosmetic') {
-      if(floorArea <= 0) { 
-        errorBlock.innerHTML = 'Для расчета косметического ремонта укажите площадь ПОЛА.'; 
-        errorBlock.style.display = 'block';
-        return; 
+    function openCalc() {
+      document.getElementById('gate').classList.remove('active');
+      document.getElementById('step1').classList.add('active');
+    }
+
+    if (memGet() === 'yes') openCalc();
+
+    document.getElementById('unlock').addEventListener('click', () => {
+      const val = document.getElementById('access-code').value.trim().toUpperCase();
+      if (val === ACCESS_CODE) { memSet(); openCalc(); }
+      else { alert('Неверный код. Напишите мне в личку слово РЕМОНТ — я пришлю код.'); }
+    });
+
+    document.getElementById('next-step1').addEventListener('click', () => {
+      const selected = document.querySelector('input[name="repair-type"]:checked');
+      if (!selected) { alert('Пожалуйста, выберите тип ремонта'); return; }
+      document.getElementById('step1').classList.remove('active');
+      document.getElementById('step2').classList.add('active');
+    });
+
+    document.getElementById('next-step2').addEventListener('click', () => {
+      const areaInput = document.getElementById('area-input');
+      if (!areaInput.value || isNaN(areaInput.value) || areaInput.value <= 0) {
+        alert('Пожалуйста, введите корректную площадь'); return;
       }
-      items.push(['Косметический ремонт под ключ', floorArea * 2000]);
-      total += floorArea * 2000;
-    }
-    if(repairType === 'complex') {
-      if(floorArea <= 0) { 
-        errorBlock.innerHTML = 'Для расчета комплексного ремонта укажите площадь ПОЛА.'; 
-        errorBlock.style.display = 'block';
-        return; 
+      document.getElementById('step2').classList.remove('active');
+      document.getElementById('step3').classList.add('active');
+    });
+
+    document.getElementById('calculate').addEventListener('click', () => {
+      const repairType = document.querySelector('input[name="repair-type"]:checked');
+      const area = parseFloat(document.getElementById('area-input').value) || 0;
+      const socketsQty = parseInt(document.getElementById('sockets-qty').value) || 0;
+      const plumbingChecked = document.getElementById('plumbing-qty').checked;
+      const trimQty = parseInt(document.getElementById('trim-qty').value) || 0;
+
+      const additionalTotal = (socketsQty * 500) + (plumbingChecked ? 3000 : 0) + (trimQty * 300);
+      const basePrice = parseFloat(repairType.dataset.price);
+      const total = (basePrice * area) + additionalTotal;
+      showResult(total);
+    });
+
+    function showResult(total) {
+      if (total < 5000 && total > 0) {
+        document.getElementById('min-order-note').textContent = 'Минимальный заказ — 5000 ₽';
+        total = 5000;
+      } else {
+        document.getElementById('min-order-note').textContent = '';
       }
-      items.push(['Комплексный ремонт под ключ', floorArea * 5000]);
-      total += floorArea * 5000;
+      document.getElementById('total-price').textContent = `${Math.round(total)} ₽`;
+      document.getElementById('step3').classList.remove('active');
+      document.getElementById('step4').classList.add('active');
     }
-
-    if(wallArea > 0) {
-      if(document.getElementById('grunt').checked) { items.push(['Грунтовка стен (по стенам)', wallArea * 100]); total += wallArea * 100; }
-      if(document.getElementById('shpak').checked) { items.push(['Шпаклевка стен (по стенам)', wallArea * 350]); total += wallArea * 350; }
-      if(document.getElementById('shtuk').checked) { items.push(['Штукатурка по маякам (по стенам)', wallArea * 500]); total += wallArea * 500; }
-      if(document.getElementById('paintWall').checked) { items.push(['Покраска стен (по стенам)', wallArea * 350]); total += wallArea * 350; }
-      if(document.getElementById('panel').checked) { items.push(['Монтаж панелей ПВХ (по стенам)', wallArea * 500]); total += wallArea * 500; }
-      if(document.getElementById('oboi').checked) { items.push(['Поклейка обоев (по стенам)', wallArea * 250]); total += wallArea * 250; }
-    }
-    
-    if(floorArea > 0) {
-      if(document.getElementById('paintCeil').checked) { items.push(['Покраска потолка (по полу)', floorArea * 400]); total += floorArea * 400; }
-      if(document.getElementById('lam').checked) { items.push(['Укладка ламината (по полу)', floorArea * 500]); total += floorArea * 500; }
-      if(document.getElementById('lin').checked) { items.push(['Укладка линолеума (по полу)', floorArea * 350]); total += floorArea * 350; }
-      if(document.getElementById('plint').checked) { items.push(['Установка плинтусов (по полу)', floorArea * 350]); total += floorArea * 350; }
-      if(document.getElementById('plitka').checked) { items.push(['Укладка плитки (по полу)', floorArea * 2000]); total += floorArea * 2000; }
-    }
-    
-    if(document.getElementById('otkWindow').checked) { items.push(['Откосы оконные (компл.)', 2500]); total += 2500; }
-    if(document.getElementById('otkDoor').checked) { items.push(['Откосы дверные (компл.)', 3500]); total += 3500; }
-
-    if(items.length === 0 && repairType === 'none') {
-      errorBlock.innerHTML = 'Вы указали площадь, но не выбрали ни один вид работ (не поставлены галочки).';
-      errorBlock.style.display = 'block';
-      return;
-    }
-
-    var totalStr = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-
-    var tableHTML = '';
-    for(var i = 0; i < items.length; i++){
-      var itemPriceStr = items[i][1].toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-      tableHTML += '<tr><td>' + items[i][0] + '</td><td>' + itemPriceStr + ' ₽</td></tr>';
-    }
-    
-    document.getElementById('table').innerHTML = tableHTML;
-    document.getElementById('total').innerHTML = 'ИТОГО: ' + totalStr + ' ₽';
-    
-    resultBlock.style.display = 'block';
-    
-    if(resultBlock.scrollIntoView) {
-      resultBlock.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-</script>
+  </script>
 </body>
 </html>
-
