@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Калькулятор ремонта — Эконом ремонт в Самаре</title>
+  <title>Калькулятор ремонта в Самаре — мастер Геннадий</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
     body { background-color: #f5f5f5; color: #333; padding: 20px; max-width: 600px; margin: 0 auto; }
     header { text-align: center; margin-bottom: 20px; }
     h1 { font-size: 24px; color: #2c3e50; margin-bottom: 10px; }
-    .subtitle { font-size: 16px; color: #7f8c8d; }
+    .subtitle { font-size: 15px; color: #7f8c8d; margin-bottom: 4px; }
     .step { display: none; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; animation: fadeIn 0.4s ease-out; }
     .step.active { display: block; }
     h2 { font-size: 20px; margin-bottom: 15px; color: #2c3e50; }
@@ -27,36 +27,20 @@
     .links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
     .link-btn { display: block; padding: 16px; text-align: center; color: white; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 500; }
     .link-btn:active { opacity: 0.8; }
-    .link-btn.telegram { background-color: #0088cc; }
-    .link-btn.whatsapp { background-color: #25D366; }
     .link-btn.max { background-color: #5b2c8e; }
-    .link-btn.vk { background-color: #4A76A8; }
     .link-btn.tel { background-color: #2c3e50; }
-    .lock-icon { font-size: 40px; text-align: center; margin-bottom: 10px; }
-    .hidden { display: none; }
+    .link-btn.channel { background-color: #7f8c8d; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
   <header>
     <h1>Калькулятор ремонта</h1>
-    <div class="subtitle">Эконом класс в Самаре</div>
+    <div class="subtitle">Частный мастер Геннадий · Самара · опыт 8 лет · 70+ объектов</div>
+    <div class="subtitle">Фикс-смета до начала работ — цена не меняется в процессе</div>
   </header>
 
-  <div id="gate" class="step active">
-    <div class="lock-icon">🔒</div>
-    <h2 style="text-align:center;">Калькулятор доступен подписчикам</h2>
-    <p class="details" style="text-align:center;">Подпишитесь на любой из каналов — код доступа выдаю в личку по слову РЕМОНТ.</p>
-    <div class="links">
-      <a href="https://max.ru/channel_econom_remont" class="link-btn max" onclick="openLink(this.href);return false;">Подписаться в Max</a>
-      <a href="https://vk.ru/remontkv_samara" class="link-btn vk" onclick="openLink(this.href);return false;">Подписаться в ВКонтакте</a>
-      <a href="https://t.me/EkonSamara" class="link-btn telegram" onclick="openLink(this.href);return false;">Подписаться в Telegram</a>
-    </div>
-    <input type="text" id="access-code" placeholder="Введите код доступа">
-    <button id="unlock">Открыть калькулятор</button>
-  </div>
-
-  <div id="step1" class="step">
+  <div id="step1" class="step active">
     <h2>Выберите тип ремонта</h2>
     <label><input type="radio" name="repair-type" value="cosmetic" data-price="3000"> Косметический ремонт (3000 ₽/м²)</label>
     <label><input type="radio" name="repair-type" value="capital" data-price="5000"> Комплексный ремонт (5000 ₽/м²)</label>
@@ -79,7 +63,7 @@
       <input type="number" id="sockets-qty" class="qty-input" placeholder="0" min="0" value="0">
     </div>
     <div class="item-row">
-      <label for="plumbing-qty">Сантехника (3000 ₽)</label>
+      <label for="plumbing-qty">Установка сантехники — раковина, унитаз (3000 ₽)</label>
       <input type="checkbox" id="plumbing-qty" style="width:auto;">
     </div>
     <div class="item-row">
@@ -94,43 +78,23 @@
       <h2>Итоговая стоимость:</h2>
       <div class="total-price" id="total-price">— ₽</div>
       <div class="details" id="min-order-note"></div>
-      <div class="disclaimer">* Сумма примерная, точную стоимость уточняйте у мастера</div>
+      <div class="disclaimer">* Сумма примерная. Точный расчёт — бесплатно: напишите мне, приеду на замер.</div>
     </div>
-    <h3>Связаться с мастером:</h3>
+    <h3>Получить точный расчёт:</h3>
     <div class="links">
-      <a href="https://golnk.ru/K9NwW" class="link-btn max" onclick="openLink(this.href);return false;">Max</a>
-      <a href="https://wa.me/79178130283" class="link-btn whatsapp" onclick="openLink(this.href);return false;">WhatsApp</a>
-      <a href="tel:+79178130283" class="link-btn tel">Позвонить</a>
-      <a href="https://vk.ru/remontkv_samara" class="link-btn vk" onclick="openLink(this.href);return false;">ВКонтакте</a>
-      <a href="https://t.me/EkonSamara" class="link-btn telegram" onclick="openLink(this.href);return false;">Telegram</a>
+      <a href="https://golnk.ru/K9NwW" class="link-btn max" onclick="openLink(this.href);return false;">💬 Написать мастеру в MAX — отвечу за 30 минут</a>
+      <a href="tel:+79178130283" class="link-btn tel">📞 Позвонить</a>
+      <a href="https://max.ru/channel_econom_remont" class="link-btn channel" onclick="openLink(this.href);return false;">📷 Смотреть канал с реальными работами</a>
     </div>
   </div>
 
   <script>
-    const ACCESS_CODE = 'РЕМОНТ';
-
-    function memGet() { try { return localStorage.getItem('calc_access'); } catch (e) { return null; } }
-    function memSet() { try { localStorage.setItem('calc_access', 'yes'); } catch (e) {} }
-
     function openLink(url) {
       try {
         if (window.top !== window.self) { window.top.location.href = url; return; }
       } catch (e) {}
       window.location.href = url;
     }
-
-    function openCalc() {
-      document.getElementById('gate').classList.remove('active');
-      document.getElementById('step1').classList.add('active');
-    }
-
-    if (memGet() === 'yes') openCalc();
-
-    document.getElementById('unlock').addEventListener('click', () => {
-      const val = document.getElementById('access-code').value.trim().toUpperCase();
-      if (val === ACCESS_CODE) { memSet(); openCalc(); }
-      else { alert('Неверный код. Напишите мне в личку слово РЕМОНТ — я пришлю код.'); }
-    });
 
     document.getElementById('next-step1').addEventListener('click', () => {
       const selected = document.querySelector('input[name="repair-type"]:checked');
