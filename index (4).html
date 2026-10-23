@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор ремонта квартиры в Самаре — мастер Геннадий</title>
+<meta name="description" content="Калькулятор ремонта квартиры в Самаре: штукатурка, шпаклёвка, покраска, обои, ламинат, линолеум, плинтусы, откосы. Цены мастера за м², расчёт за минуту.">
+<link rel="canonical" href="https://gennadiikostyk-wq.github.io/-samara-calc/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Калькулятор ремонта квартиры в Самаре — мастер Геннадий">
+<meta property="og:description" content="Посчитайте примерную стоимость ремонта по ценам мастера: отделочные работы за м², плинтусы, откосы, санузел.">
+<meta property="og:url" content="https://gennadiikostyk-wq.github.io/-samara-calc/">
+<meta property="og:locale" content="ru_RU">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧰</text></svg>">
+<style>
+  :root{
+    --ink:#22313f; --ink-soft:#5b6b7a; --line:#dfe4e8; --bg:#f4f6f8;
+    --accent:#2f7fc1; --accent-dark:#24638f; --tg:#2aabee; --max:#6a3ea1;
+    --ok:#1e7d4f; --warn:#b03a2e; --radius:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  body{background:var(--bg);color:var(--ink);padding:16px 14px 32px;max-width:640px;margin:0 auto;line-height:1.45;-webkit-text-size-adjust:100%}
+  header{text-align:center;margin-bottom:18px}
+  h1{font-size:23px;line-height:1.25;margin-bottom:6px}
+  .subtitle{font-size:14px;color:var(--ink-soft);margin-bottom:3px}
+  .badges{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px}
+  .badge{font-size:12px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 10px;color:var(--ink-soft)}
+  .card{background:#fff;border-radius:var(--radius);box-shadow:0 2px 10px rgba(16,42,67,.06);padding:18px;margin-bottom:14px}
+  h2{font-size:19px;margin-bottom:6px}
+  .hint{font-size:13px;color:var(--ink-soft);margin-bottom:14px}
+  .step{display:none}
+  .step.active{display:block;animation:fade .25s ease-out}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .choice{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;cursor:pointer;transition:border-color .15s,background .15s}
+  .choice:hover{border-color:#b9c6d2}
+  .choice input{margin-top:3px;flex:0 0 auto;width:18px;height:18px;accent-color:var(--accent)}
+  .choice-body{flex:1}
+  .choice-title{font-weight:600;font-size:16px;display:flex;justify-content:space-between;gap:10px}
+  .price{color:var(--accent-dark);white-space:nowrap;font-weight:600}
+  .choice-desc{font-size:13px;color:var(--ink-soft);margin-top:3px}
+  .choice:has(input:checked){border-color:var(--accent);background:#f2f8fd}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:14px;margin-bottom:6px;color:var(--ink-soft)}
+  input[type=number]{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:17px;color:var(--ink)}
+  input[type=number]:focus{outline:none;border-color:var(--accent)}
+  .err{color:var(--warn);font-size:13px;margin-top:6px;display:none}
+  .err.show{display:block}
+  .work{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #eef1f4}
+  .work:last-of-type{border-bottom:none}
+  .work-label{flex:1;font-size:14.5px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+  .work-rate{font-size:12.5px;color:var(--ink-soft)}
+  .work input[type=checkbox]{width:19px;height:19px;accent-color:var(--accent);flex:0 0 auto}
+  .work input[type=number]{width:74px;flex:0 0 auto;padding:9px 8px;font-size:15px;text-align:center}
+  .work input[type=number]:disabled{opacity:.45;background:#f7f9fa}
+  .live{display:flex;justify-content:space-between;align-items:center;background:#f2f8fd;border-radius:10px;padding:12px 14px;margin:14px 0 4px;font-size:14px}
+  .live b{font-size:18px}
+  .btn{display:block;width:100%;padding:15px 18px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;text-align:center;text-decoration:none;line-height:1.2}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:active{background:var(--accent-dark)}
+  .btn-ghost{background:#eef2f5;color:var(--ink)}
+  .btn-row{display:flex;gap:10px;margin-top:12px}
+  .btn-row .btn{flex:1}
+  .result{text-align:center;background:#f2f8fd;border-radius:var(--radius);padding:20px 16px;margin-bottom:16px}
+  .result .label{font-size:14px;color:var(--ink-soft)}
+  .total{font-size:31px;font-weight:700;color:var(--ink);margin:6px 0 4px;letter-spacing:-.5px}
+  .result .note{font-size:13px;color:var(--ink-soft)}
+  .min-order{font-size:13px;color:var(--warn);margin-top:6px;display:none}
+  .min-order.show{display:block}
+  .breakdown{font-size:13.5px;color:var(--ink-soft);margin-top:10px;text-align:left;border-top:1px solid #dbe6ee;padding-top:10px}
+  .breakdown div{display:flex;justify-content:space-between;gap:10px;padding:2px 0}
+  .disclaimer{font-size:12.5px;color:var(--ink-soft);margin-top:10px;line-height:1.4}
+  .links{display:flex;flex-direction:column;gap:9px}
+  .link-btn{display:block;padding:15px;text-align:center;color:#fff;text-decoration:none;border-radius:10px;font-size:15.5px;font-weight:600}
+  .link-btn.tg{background:var(--tg)}
+  .link-btn.max{background:var(--max)}
+  .link-btn.tel{background:var(--ink)}
+  .link-btn.site{background:#eef2f5;color:var(--ink);font-weight:500}
+  .under{font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.5}
+  .under a{color:var(--accent-dark)}
+  .back{margin-top:10px}
+  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;font-size:13.5px;opacity:0;pointer-events:none;transition:.2s;z-index:9}
+  .toast.show{opacity:1;transform:translateX(-50%)}
+  @media(min-width:560px){body{padding:26px 20px 40px}h1{font-size:26px}.total{font-size:35px}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Калькулятор ремонта квартиры в Самаре</h1>
+  <div class="subtitle">Частный мастер Геннадий · опыт 8 лет</div>
+  <div class="badges">
+    <span class="badge">Гарантия 2 года</span>
+    <span class="badge">Договор с фиксацией цены</span>
+    <span class="badge">Выезд на замер бесплатно</span>
+  </div>
+</header>
+
+<main>
+  <!-- Шаг 1: режим -->
+  <section class="card step active" id="s1">
+    <h2>Что нужно посчитать?</h2>
+    <p class="hint">Можно посчитать ремонт целиком или отдельные работы.</p>
+    <label class="choice">
+      <input type="radio" name="mode" value="turnkey">
+      <span class="choice-body">
+        <span class="choice-title">Ремонт под ключ<span class="price">от 3 000 ₽/м²</span></span>
+        <span class="choice-desc">Цена за м² площади помещения. Косметический, комплексный или санузел.</span>
+      </span>
+    </label>
+    <label class="choice">
+      <input type="radio" name="mode" value="works">
+      <span class="choice-body">
+        <span class="choice-title">Отдельные работы<span class="price">за м², пог.м, шт</span></span>
+        <span class="choice-desc">Обои, покраска, штукатурка, полы, плинтусы, откосы и другое — по позициям.</span>
+      </span>
+    </label>
+    <div class="err" id="e1">Выберите, что считать</div>
+    <button class="btn btn-primary" id="next1" style="margin-top:14px">Далее</button>
+  </section>
+
+  <!-- Шаг 2a: тариф -->
+  <section class="card step" id="s2a">
+    <h2>Тип ремонта</h2>
+    <p class="hint">Цена за м² площади помещения, без материалов.</p>
+    <label class="choice">
+      <input type="radio" name="tariff" value="3000">
+      <span class="choice-body">
+        <span class="choice-title">Косметический<span class="price">3 000 ₽/м²</span></span>
+        <span class="choice-desc">Стены, потолок, пол: подготовка, шпаклёвка, покраска или обои, плинтусы.</span>
+      </span>
+    </label>
+    <label class="choice">
+      <input type="radio" name="tariff" value="5000">
+      <span class="choice-body">
+        <span class="choice-title">Комплексный<span class="price">5 000 ₽/м²</span></span>
+        <span class="choice-desc">Косметический ремонт плюс штукатурка стен, выравнивание пола и откосы.</span>
+      </span>
+    </label>
+    <label class="choice">
+      <input type="radio" name="tariff" value="2000">
+      <span class="choice-body">
+        <span class="choice-title">Санузел под ключ<span class="price">2 000 ₽/м²</span></span>
+        <span class="choice-desc">Плитка на стены и пол, подготовка основания.</span>
+      </span>
+    </label>
+    <div class="err" id="e2a">Выберите тип ремонта</div>
+    <div class="btn-row" style="margin-top:14px">
+      <button class="btn btn-ghost" data-back="s1">Назад</button>
+      <button class="btn btn-primary" id="next2a">Далее</button>
+    </div>
+  </section>
+
+  <!-- Шаг 2b: список работ -->
+  <section class="card step" id="s2b">
+    <h2>Отметьте работы</h2>
+    <p class="hint">Укажите объёмы. Считать можно и одну позицию.</p>
+    <div id="worksList"></div>
+    <div class="live"><span>Итого</span><b id="liveTotal">0 ₽</b></div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" data-back="s1">Назад</button>
+      <button class="btn btn-primary" id="next2b">Показать расчёт</button>
+    </div>
+  </section>
+
+  <!-- Шаг 3: площадь -->
+  <section class="card step" id="s3">
+    <h2>Площадь помещения</h2>
+    <p class="hint">Общая площадь, по полу — в м².</p>
+    <div class="field">
+      <label for="area">Площадь, м²</label>
+      <input type="number" id="area" inputmode="decimal" min="1" step="0.1" placeholder="Например: 35">
+      <div class="err" id="e3">Введите площадь числом больше нуля</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" data-back="s2a">Назад</button>
+      <button class="btn btn-primary" id="next3">Рассчитать</button>
+    </div>
+  </section>
+
+  <!-- Шаг 4: результат -->
+  <section class="card step" id="s4" aria-live="polite">
+    <div class="result">
+      <div class="label">Ориентировочная стоимость работ</div>
+      <div class="total" id="total">— ₽</div>
+      <div class="note" id="note"></div>
+      <div class="min-order" id="minOrder">Минимальный заказ — 5 000 ₽</div>
+      <div class="breakdown" id="breakdown"></div>
+    </div>
+    <p class="disclaimer" id="disclaimer">Цены — за работу без материалов. Сумма ориентировочная: точную зафиксирую в смете после бесплатного замера.</p>
+    <h3 style="font-size:16px;margin:16px 0 10px">Получить точный расчёт</h3>
+    <div class="links">
+      <a class="link-btn tg" href="https://t.me/remont_kv63" target="_blank" rel="noopener">Telegram — написать мастеру</a>
+      <a class="link-btn max" href="https://golnk.ru/K9NwW" target="_blank" rel="noopener">MAX — написать мастеру</a>
+      <a class="link-btn tel" id="telBtn" href="tel:+79178130283">Позвонить: 8 917 813-02-83</a>
+      <a class="link-btn site" href="https://remontkvsamara.ru" target="_blank" rel="noopener">Сайт с примерами работ</a>
+    </div>
+    <div class="under">Фото работ — в <a href="https://t.me/EkonSamara" target="_blank" rel="noopener">Telegram-канале</a> и <a href="https://vk.ru/remontkv_samara" target="_blank" rel="noopener">ВКонтакте</a></div>
+    <div class="btn-row back">
+      <button class="btn btn-ghost" id="copy">Скопировать расчёт</button>
+      <button class="btn btn-ghost" id="restart">Сначала</button>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast">Расчёт скопирован</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ── Цены в одном месте. Меняются здесь и только здесь. ── */
+  var WORKS = [
+    {id:"shtukaturka", name:"Штукатурка стен",              rate:500,  unit:"м²",    step:1},
+    {id:"shpaklevka",  name:"Шпаклёвка стен",               rate:350,  unit:"м²",    step:1},
+    {id:"shkurka",     name:"Шлифовка стен (шкурка)",       rate:150,  unit:"м²",    step:1},
+    {id:"pokraska",    name:"Покраска стен и потолка",      rate:450,  unit:"м²",    step:1},
+    {id:"oboi",        name:"Поклейка обоев, в т.ч. встык и со стыковкой рисунка", rate:250, unit:"м²", step:1},
+    {id:"fotooboi",    name:"Фотообои",                     rate:350,  unit:"м²",    step:1},
+    {id:"paneli",      name:"Пластиковые панели",           rate:500,  unit:"м²",    step:1},
+    {id:"laminat",     name:"Укладка ламината",             rate:500,  unit:"м²",    step:1},
+    {id:"kvarc",       name:"Укладка кварцвинила",          rate:500,  unit:"м²",    step:1},
+    {id:"linoleum",    name:"Укладка линолеума",            rate:350,  unit:"м²",    step:1},
+    {id:"plintus_pol", name:"Плинтус напольный",            rate:350,  unit:"пог.м", step:0.5},
+    {id:"plintus_pot", name:"Плинтус потолочный",           rate:300,  unit:"пог.м", step:0.5},
+    {id:"otkosy",      name:"Откосы (окно, дверь)",         rate:800,  unit:"шт",    step:1},
+    {id:"koroba",      name:"Короба сантехнические и вентиляционные", rate:3500, unit:"шт", step:1},
+    {id:"sanuzen",     name:"Санузел под ключ (плитка)",    rate:2000, unit:"м²",    step:1},
+    {id:"rozetki",     name:"Розетки и выключатели (замена, по согласованию)", rate:500, unit:"шт", step:1},
+    {id:"santehnika",  name:"Установка сантехники: унитаз, раковина, ванна, смеситель", rate:3000, unit:"шт", step:1}
+  ];
+  var EXTRAS = [
+    {id:"x_otkos",      name:"Откосы",                     rate:800,  unit:"шт"},
+    {id:"x_korob",      name:"Короба",                     rate:3500, unit:"шт"},
+    {id:"x_rozetki",    name:"Розетки и выключатели",      rate:500,  unit:"шт"},
+    {id:"x_santehnika", name:"Установка сантехники",       rate:3000, unit:"шт"}
+  ];
+  var MIN_ORDER = 5000;
+
+  var state = {mode:null, tariff:null, area:0, works:{}, extras:{}};
+  var $ = function(id){ return document.getElementById(id); };
+  var money = function(n){ return Math.round(n).toLocaleString("ru-RU").replace(/\u00A0/g," ") + " ₽"; };
+  function show(id){
+    document.querySelectorAll(".step").forEach(function(s){ s.classList.remove("active"); });
+    $(id).classList.add("active");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+  function hideErr(id){ $(id).classList.remove("show"); }
+
+  /* Список работ */
+  var list = $("worksList");
+  WORKS.forEach(function(w){
+    var row = document.createElement("div");
+    row.className = "work";
+    row.innerHTML =
+      '<input type="checkbox" id="c_'+w.id+'" aria-label="'+w.name+'">' +
+      '<label class="work-label" for="c_'+w.id+'">'+w.name+
+        '<span class="work-rate">'+(w.rate === null ? (w.note ? w.note + ', ' : '') + 'цена по запросу — после замера' : money(w.rate)+' / '+w.unit)+'</span></label>' +
+      '<input type="number" id="q_'+w.id+'" min="0" step="'+w.step+'" value="" placeholder="0" inputmode="decimal" disabled aria-label="Объём: '+w.name+'">';
+    list.appendChild(row);
+    row.querySelector("#c_"+w.id).addEventListener("change", function(e){
+      var q = row.querySelector("#q_"+w.id);
+      q.disabled = !e.target.checked;
+      if(e.target.checked && !q.value){ q.value = (w.unit === "м²" ? 10 : (w.unit === "шт" ? 1 : 10)); }
+      if(!e.target.checked){ q.value = ""; }
+      recalcWorks();
+    });
+    row.querySelector("#q_"+w.id).addEventListener("input", recalcWorks);
+  });
+
+  function worksTotal(){
+    var sum = 0;
+    WORKS.forEach(function(w){
+      var c = $("c_"+w.id), q = $("q_"+w.id);
+      if(c && c.checked && w.rate !== null){
+        var v = parseFloat(String(q.value).replace(",", "."));
+        if(v > 0){ sum += v * w.rate; }
+      }
+    });
+    return sum;
+  }
+  function recalcWorks(){
+    var t = worksTotal();
+    var byRequest = 0;
+    state.works = {};
+    WORKS.forEach(function(w){
+      var c = $("c_"+w.id), q = $("q_"+w.id);
+      if(c && c.checked){
+        var v = parseFloat(String(q.value).replace(",", "."));
+        if(v > 0){
+          state.works[w.id] = {qty:v, rate:w.rate, unit:w.unit, name:w.name};
+          if(w.rate === null){ byRequest++; }
+        }
+      }
+    });
+    $("liveTotal").textContent = money(t) + (byRequest ? " + по запросу" : "");
+  }
+
+  /* Доп. работы в режиме «под ключ» */
+  var extrasBox = document.createElement("div");
+  extrasBox.id = "extrasBox";
+  extrasBox.style.display = "none";
+  extrasBox.style.marginTop = "16px";
+  extrasBox.innerHTML = '<h3 style="font-size:15px;margin-bottom:2px">Дополнительно</h3>' +
+    '<p class="hint" style="margin-bottom:8px">Эти работы в тариф не входят — считаются отдельно.</p>';
+  EXTRAS.forEach(function(x){
+    var row = document.createElement("div");
+    row.className = "work";
+    row.innerHTML =
+      '<input type="checkbox" id="xc_'+x.id+'" aria-label="'+x.name+'">' +
+      '<label class="work-label" for="xc_'+x.id+'">'+x.name+
+        '<span class="work-rate">'+money(x.rate)+' / '+x.unit+'</span></label>' +
+      '<input type="number" id="xq_'+x.id+'" min="0" step="1" placeholder="0" inputmode="numeric" disabled aria-label="Количество: '+x.name+'">';
+    extrasBox.appendChild(row);
+    row.querySelector("#xc_"+x.id).addEventListener("change", function(e){
+      var q = row.querySelector("#xq_"+x.id);
+      q.disabled = !e.target.checked;
+      if(e.target.checked && !q.value){ q.value = 1; }
+      if(!e.target.checked){ q.value = ""; }
+    });
+  });
+  $("s3").querySelector(".btn-row").before(extrasBox);
+
+  /* Навигация */
+  $("next1").addEventListener("click", function(){
+    var m = document.querySelector('input[name="mode"]:checked');
+    if(!m){ $("e1").classList.add("show"); return; }
+    hideErr("e1");
+    state.mode = m.value;
+    show(state.mode === "turnkey" ? "s2a" : "s2b");
+  });
+  document.querySelectorAll('input[name="mode"]').forEach(function(r){
+    r.addEventListener("change", function(){ hideErr("e1"); });
+  });
+
+  $("next2a").addEventListener("click", function(){
+    var t = document.querySelector('input[name="tariff"]:checked');
+    if(!t){ $("e2a").classList.add("show"); return; }
+    hideErr("e2a");
+    state.tariff = parseInt(t.value, 10);
+    extrasBox.style.display = "block";
+    show("s3");
+  });
+  document.querySelectorAll('input[name="tariff"]').forEach(function(r){
+    r.addEventListener("change", function(){ hideErr("e2a"); });
+  });
+
+  document.querySelectorAll("[data-back]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var target = b.getAttribute("data-back");
+      if(target === "s1"){ extrasBox.style.display = "none"; }
+      show(target);
+    });
+  });
+
+  $("next2b").addEventListener("click", function(){
+    if(!Object.keys(state.works).length){ $("e2b").classList.add("show"); return; }
+    hideErr("e2b");
+    renderResult(worksTotal(), "works");
+    show("s4");
+  });
+  // сообщение об ошибке для списка работ
+  var e2b = document.createElement("div");
+  e2b.className = "err"; e2b.id = "e2b"; e2b.textContent = "Отметьте хотя бы одну работу и укажите объём";
+  $("s2b").querySelector(".btn-row").before(e2b);
+
+  $("next3").addEventListener("click", function(){
+    var v = parseFloat(String($("area").value).replace(",", "."));
+    if(!(v > 0)){ $("e3").classList.add("show"); return; }
+    hideErr("e3");
+    state.area = v;
+    var total = state.tariff * v;
+    EXTRAS.forEach(function(x){
+      var c = $("xc_"+x.id), q = $("xq_"+x.id);
+      if(c && c.checked){
+        var n = parseFloat(String(q.value).replace(",", "."));
+        if(n > 0){ total += n * x.rate; }
+      }
+    });
+    renderResult(total, "turnkey");
+    show("s4");
+  });
+
+  var lastText = "";
+
+  function renderResult(total, mode){
+    var minNote = false;
+    if(total > 0 && total < MIN_ORDER){ minNote = true; total = MIN_ORDER; }
+
+    $("total").textContent = total > 0 ? "от " + money(total) : "по запросу";
+    $("minOrder").classList.toggle("show", minNote);
+
+    var rows = [];
+    if(mode === "turnkey"){
+      var tname = state.tariff === 3000 ? "Косметический ремонт" : state.tariff === 5000 ? "Комплексный ремонт" : "Санузел под ключ";
+      rows.push([tname + ": " + state.tariff.toLocaleString("ru-RU") + " ₽/м² × " + state.area + " м²", money(state.tariff * state.area)]);
+      EXTRAS.forEach(function(x){
+        var c = $("xc_"+x.id), q = $("xq_"+x.id);
+        if(c && c.checked){
+          var n = parseFloat(String(q.value).replace(",", "."));
+          if(n > 0){ rows.push([x.name + ": " + n + " " + x.unit, money(n * x.rate)]); }
+        }
+      });
+      $("note").textContent = "Площадь " + state.area + " м² · " + tname.toLowerCase();
+      lastText = "Калькулятор ремонта — мастер Геннадий, Самара\n" + tname + ", " + state.area + " м²\nИтого: от " + money(total) + " (работы без материалов)";
+    } else {
+      var byRequest = [];
+      WORKS.forEach(function(w){
+        if(state.works[w.id]){
+          var it = state.works[w.id];
+          if(it.rate === null){
+            rows.push([it.name + ": " + it.qty + " " + it.unit, "по запросу"]);
+            byRequest.push(it.name);
+          } else {
+            rows.push([it.name + ": " + it.qty + " " + it.unit, money(it.qty * it.rate)]);
+          }
+        }
+      });
+      $("note").textContent = "Отдельные работы, " + rows.length + " поз." + (byRequest.length ? " · по запросу: " + byRequest.join(", ") : "");
+      lastText = "Калькулятор ремонта — мастер Геннадий, Самара\n" +
+        rows.map(function(r){ return "• " + r[0] + " — " + r[1]; }).join("\n") +
+        "\nИтого: от " + money(total) + " (работы без материалов)";
+    }
+
+    $("breakdown").innerHTML = rows.map(function(r){
+      return "<div><span>" + r[0] + "</span><span>" + r[1] + "</span></div>";
+    }).join("");
+    state.total = total;
+  }
+
+  /* Копирование */
+  $("copy").addEventListener("click", function(){
+    var text = lastText;
+    function done(){ var t = $("toast"); t.classList.add("show"); setTimeout(function(){ t.classList.remove("show"); }, 1800); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+    function fallback(){
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand("copy"); done(); }catch(e){}
+      document.body.removeChild(ta);
+    }
+  });
+
+  /* Сначала */
+  $("restart").addEventListener("click", function(){
+    document.querySelectorAll('input[name="mode"], input[name="tariff"]').forEach(function(r){ r.checked = false; });
+    document.querySelectorAll('#worksList input[type=checkbox], #extrasBox input[type=checkbox]').forEach(function(c){ c.checked = false; });
+    document.querySelectorAll('#worksList input[type=number], #extrasBox input[type=number]').forEach(function(q){ q.value = ""; q.disabled = true; });
+    $("area").value = "";
+    $("liveTotal").textContent = "0 ₽";
+    $("total").textContent = "— ₽";
+    $("breakdown").innerHTML = "";
+    $("note").textContent = "";
+    ["e1","e2a","e3"].forEach(hideErr);
+    extrasBox.style.display = "none";
+    state = {mode:null, tariff:null, area:0, works:{}, extras:{}};
+    show("s1");
+  });
+})();
+</script>
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+  ym(106531782, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/106531782" style="position:absolute; left:-9999px;" alt=""></div></noscript>
+</body>
+</html>
