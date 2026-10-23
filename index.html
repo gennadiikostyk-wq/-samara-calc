@@ -1,141 +1,473 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Калькулятор ремонта в Самаре — мастер Геннадий</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-    body { background-color: #f5f5f5; color: #333; padding: 20px; max-width: 600px; margin: 0 auto; }
-    header { text-align: center; margin-bottom: 20px; }
-    h1 { font-size: 24px; color: #2c3e50; margin-bottom: 10px; }
-    .subtitle { font-size: 15px; color: #7f8c8d; margin-bottom: 4px; }
-    .step { display: none; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; animation: fadeIn 0.4s ease-out; }
-    .step.active { display: block; }
-    h2 { font-size: 20px; margin-bottom: 15px; color: #2c3e50; }
-    label { display: block; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; cursor: pointer; }
-    input[type="radio"], input[type="checkbox"] { margin-right: 10px; }
-    input[type="number"], input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; margin-top: 10px; }
-    .qty-input { width: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; margin: 0; }
-    .item-row { display: flex; align-items: center; justify-content: space-between; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; gap: 10px; }
-    .item-row label { border: none; padding: 0; margin: 0; flex: 1; }
-    button { background-color: #3498db; color: white; border: none; padding: 14px 20px; width: 100%; font-size: 16px; border-radius: 8px; cursor: pointer; margin-top: 10px; }
-    .result-box { background-color: #eaf7ff; padding: 20px; border-radius: 12px; text-align: center; margin: 20px 0; }
-    .total-price { font-size: 28px; font-weight: bold; color: #2c3e50; margin: 10px 0; }
-    .details { font-size: 14px; color: #7f8c8d; }
-    .disclaimer { font-size: 13px; color: #c0392b; margin-top: 10px; font-style: italic; }
-    .links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-    .link-btn { display: block; padding: 16px; text-align: center; color: white; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: 500; }
-    .link-btn:active { opacity: 0.8; }
-    .link-btn.max { background-color: #5b2c8e; }
-    .link-btn.tel { background-color: #2c3e50; }
-    .link-btn.channel { background-color: #7f8c8d; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ СЂРµРјРѕРЅС‚Р° РєРІР°СЂС‚РёСЂС‹ РІ РЎР°РјР°СЂРµ вЂ” РјР°СЃС‚РµСЂ Р“РµРЅРЅР°РґРёР№</title>
+<meta name="description" content="РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ СЂРµРјРѕРЅС‚Р° РєРІР°СЂС‚РёСЂС‹ РІ РЎР°РјР°СЂРµ: С€С‚СѓРєР°С‚СѓСЂРєР°, С€РїР°РєР»С‘РІРєР°, РїРѕРєСЂР°СЃРєР°, РѕР±РѕРё, Р»Р°РјРёРЅР°С‚, Р»РёРЅРѕР»РµСѓРј, РїР»РёРЅС‚СѓСЃС‹, РѕС‚РєРѕСЃС‹. Р¦РµРЅС‹ РјР°СЃС‚РµСЂР° Р·Р° РјВІ, СЂР°СЃС‡С‘С‚ Р·Р° РјРёРЅСѓС‚Сѓ.">
+<link rel="canonical" href="https://gennadiikostyk-wq.github.io/-samara-calc/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ СЂРµРјРѕРЅС‚Р° РєРІР°СЂС‚РёСЂС‹ РІ РЎР°РјР°СЂРµ вЂ” РјР°СЃС‚РµСЂ Р“РµРЅРЅР°РґРёР№">
+<meta property="og:description" content="РџРѕСЃС‡РёС‚Р°Р№С‚Рµ РїСЂРёРјРµСЂРЅСѓСЋ СЃС‚РѕРёРјРѕСЃС‚СЊ СЂРµРјРѕРЅС‚Р° РїРѕ С†РµРЅР°Рј РјР°СЃС‚РµСЂР°: РѕС‚РґРµР»РѕС‡РЅС‹Рµ СЂР°Р±РѕС‚С‹ Р·Р° РјВІ, РїР»РёРЅС‚СѓСЃС‹, РѕС‚РєРѕСЃС‹, СЃР°РЅСѓР·РµР».">
+<meta property="og:url" content="https://gennadiikostyk-wq.github.io/-samara-calc/">
+<meta property="og:locale" content="ru_RU">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>рџ§°</text></svg>">
+<style>
+  :root{
+    --ink:#22313f; --ink-soft:#5b6b7a; --line:#dfe4e8; --bg:#f4f6f8;
+    --accent:#2f7fc1; --accent-dark:#24638f; --tg:#2aabee; --max:#6a3ea1;
+    --ok:#1e7d4f; --warn:#b03a2e; --radius:12px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  body{background:var(--bg);color:var(--ink);padding:16px 14px 32px;max-width:640px;margin:0 auto;line-height:1.45;-webkit-text-size-adjust:100%}
+  header{text-align:center;margin-bottom:18px}
+  h1{font-size:23px;line-height:1.25;margin-bottom:6px}
+  .subtitle{font-size:14px;color:var(--ink-soft);margin-bottom:3px}
+  .badges{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px}
+  .badge{font-size:12px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 10px;color:var(--ink-soft)}
+  .card{background:#fff;border-radius:var(--radius);box-shadow:0 2px 10px rgba(16,42,67,.06);padding:18px;margin-bottom:14px}
+  h2{font-size:19px;margin-bottom:6px}
+  .hint{font-size:13px;color:var(--ink-soft);margin-bottom:14px}
+  .step{display:none}
+  .step.active{display:block;animation:fade .25s ease-out}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .choice{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px;cursor:pointer;transition:border-color .15s,background .15s}
+  .choice:hover{border-color:#b9c6d2}
+  .choice input{margin-top:3px;flex:0 0 auto;width:18px;height:18px;accent-color:var(--accent)}
+  .choice-body{flex:1}
+  .choice-title{font-weight:600;font-size:16px;display:flex;justify-content:space-between;gap:10px}
+  .price{color:var(--accent-dark);white-space:nowrap;font-weight:600}
+  .choice-desc{font-size:13px;color:var(--ink-soft);margin-top:3px}
+  .choice:has(input:checked){border-color:var(--accent);background:#f2f8fd}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:14px;margin-bottom:6px;color:var(--ink-soft)}
+  input[type=number]{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:17px;color:var(--ink)}
+  input[type=number]:focus{outline:none;border-color:var(--accent)}
+  .err{color:var(--warn);font-size:13px;margin-top:6px;display:none}
+  .err.show{display:block}
+  .work{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #eef1f4}
+  .work:last-of-type{border-bottom:none}
+  .work-label{flex:1;font-size:14.5px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+  .work-rate{font-size:12.5px;color:var(--ink-soft)}
+  .work input[type=checkbox]{width:19px;height:19px;accent-color:var(--accent);flex:0 0 auto}
+  .work input[type=number]{width:74px;flex:0 0 auto;padding:9px 8px;font-size:15px;text-align:center}
+  .work input[type=number]:disabled{opacity:.45;background:#f7f9fa}
+  .live{display:flex;justify-content:space-between;align-items:center;background:#f2f8fd;border-radius:10px;padding:12px 14px;margin:14px 0 4px;font-size:14px}
+  .live b{font-size:18px}
+  .btn{display:block;width:100%;padding:15px 18px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;text-align:center;text-decoration:none;line-height:1.2}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:active{background:var(--accent-dark)}
+  .btn-ghost{background:#eef2f5;color:var(--ink)}
+  .btn-row{display:flex;gap:10px;margin-top:12px}
+  .btn-row .btn{flex:1}
+  .result{text-align:center;background:#f2f8fd;border-radius:var(--radius);padding:20px 16px;margin-bottom:16px}
+  .result .label{font-size:14px;color:var(--ink-soft)}
+  .total{font-size:31px;font-weight:700;color:var(--ink);margin:6px 0 4px;letter-spacing:-.5px}
+  .result .note{font-size:13px;color:var(--ink-soft)}
+  .min-order{font-size:13px;color:var(--warn);margin-top:6px;display:none}
+  .min-order.show{display:block}
+  .breakdown{font-size:13.5px;color:var(--ink-soft);margin-top:10px;text-align:left;border-top:1px solid #dbe6ee;padding-top:10px}
+  .breakdown div{display:flex;justify-content:space-between;gap:10px;padding:2px 0}
+  .disclaimer{font-size:12.5px;color:var(--ink-soft);margin-top:10px;line-height:1.4}
+  .links{display:flex;flex-direction:column;gap:9px}
+  .link-btn{display:block;padding:15px;text-align:center;color:#fff;text-decoration:none;border-radius:10px;font-size:15.5px;font-weight:600}
+  .link-btn.tg{background:var(--tg)}
+  .link-btn.max{background:var(--max)}
+  .link-btn.tel{background:var(--ink)}
+  .link-btn.site{background:#eef2f5;color:var(--ink);font-weight:500}
+  .under{font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.5}
+  .under a{color:var(--accent-dark)}
+  .back{margin-top:10px}
+  .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;font-size:13.5px;opacity:0;pointer-events:none;transition:.2s;z-index:9}
+  .toast.show{opacity:1;transform:translateX(-50%)}
+  @media(min-width:560px){body{padding:26px 20px 40px}h1{font-size:26px}.total{font-size:35px}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Калькулятор ремонта</h1>
-    <div class="subtitle">Частный мастер Геннадий · Самара · опыт 8 лет · 70+ объектов</div>
-    <div class="subtitle">Фикс-смета до начала работ — цена не меняется в процессе</div>
-  </header>
-
-  <div id="step1" class="step active">
-    <h2>Выберите тип ремонта</h2>
-    <label><input type="radio" name="repair-type" value="cosmetic" data-price="3000"> Косметический ремонт (3000 ₽/м²)</label>
-    <label><input type="radio" name="repair-type" value="capital" data-price="5000"> Комплексный ремонт (5000 ₽/м²)</label>
-    <label><input type="radio" name="repair-type" value="bathroom" data-price="2000"> Ремонт ванной комнаты (плитка от 2000 ₽/м²)</label>
-    <label><input type="radio" name="repair-type" value="laminate" data-price="500"> Укладка ламината (500 ₽/м²)</label>
-    <button id="next-step1">Далее</button>
+<header>
+  <h1>РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ СЂРµРјРѕРЅС‚Р° РєРІР°СЂС‚РёСЂС‹ РІ РЎР°РјР°СЂРµ</h1>
+  <div class="subtitle">Р§Р°СЃС‚РЅС‹Р№ РјР°СЃС‚РµСЂ Р“РµРЅРЅР°РґРёР№ В· РѕРїС‹С‚ 8 Р»РµС‚</div>
+  <div class="badges">
+    <span class="badge">Р“Р°СЂР°РЅС‚РёСЏ 2 РіРѕРґР°</span>
+    <span class="badge">Р”РѕРіРѕРІРѕСЂ СЃ С„РёРєСЃР°С†РёРµР№ С†РµРЅС‹</span>
+    <span class="badge">Р’С‹РµР·Рґ РЅР° Р·Р°РјРµСЂ Р±РµСЃРїР»Р°С‚РЅРѕ</span>
   </div>
+</header>
 
-  <div id="step2" class="step">
-    <h2>Введите площадь помещения</h2>
-    <p class="details">(в м²)</p>
-    <input type="number" id="area-input" placeholder="Например: 35" min="1">
-    <button id="next-step2">Далее</button>
-  </div>
+<main>
+  <!-- РЁР°Рі 1: СЂРµР¶РёРј -->
+  <section class="card step active" id="s1">
+    <h2>Р§С‚Рѕ РЅСѓР¶РЅРѕ РїРѕСЃС‡РёС‚Р°С‚СЊ?</h2>
+    <p class="hint">РњРѕР¶РЅРѕ РїРѕСЃС‡РёС‚Р°С‚СЊ СЂРµРјРѕРЅС‚ С†РµР»РёРєРѕРј РёР»Рё РѕС‚РґРµР»СЊРЅС‹Рµ СЂР°Р±РѕС‚С‹.</p>
+    <label class="choice">
+      <input type="radio" name="mode" value="turnkey">
+      <span class="choice-body">
+        <span class="choice-title">Р РµРјРѕРЅС‚ РїРѕРґ РєР»СЋС‡<span class="price">РѕС‚ 3 000 в‚Ѕ/РјВІ</span></span>
+        <span class="choice-desc">Р¦РµРЅР° Р·Р° РјВІ РїР»РѕС‰Р°РґРё РїРѕРјРµС‰РµРЅРёСЏ. РљРѕСЃРјРµС‚РёС‡РµСЃРєРёР№, РєРѕРјРїР»РµРєСЃРЅС‹Р№ РёР»Рё СЃР°РЅСѓР·РµР».</span>
+      </span>
+    </label>
+    <label class="choice">
+      <input type="radio" name="mode" value="works">
+      <span class="choice-body">
+        <span class="choice-title">РћС‚РґРµР»СЊРЅС‹Рµ СЂР°Р±РѕС‚С‹<span class="price">Р·Р° РјВІ, РїРѕРі.Рј, С€С‚</span></span>
+        <span class="choice-desc">РћР±РѕРё, РїРѕРєСЂР°СЃРєР°, С€С‚СѓРєР°С‚СѓСЂРєР°, РїРѕР»С‹, РїР»РёРЅС‚СѓСЃС‹, РѕС‚РєРѕСЃС‹ Рё РґСЂСѓРіРѕРµ вЂ” РїРѕ РїРѕР·РёС†РёСЏРј.</span>
+      </span>
+    </label>
+    <div class="err" id="e1">Р’С‹Р±РµСЂРёС‚Рµ, С‡С‚Рѕ СЃС‡РёС‚Р°С‚СЊ</div>
+    <button class="btn btn-primary" id="next1" style="margin-top:14px">Р”Р°Р»РµРµ</button>
+  </section>
 
-  <div id="step3" class="step">
-    <h2>Дополнительные работы (по желанию)</h2>
-    <div class="item-row">
-      <label for="sockets-qty">Замена розеток (500 ₽/шт)</label>
-      <input type="number" id="sockets-qty" class="qty-input" placeholder="0" min="0" value="0">
+  <!-- РЁР°Рі 2a: С‚Р°СЂРёС„ -->
+  <section class="card step" id="s2a">
+    <h2>РўРёРї СЂРµРјРѕРЅС‚Р°</h2>
+    <p class="hint">Р¦РµРЅР° Р·Р° РјВІ РїР»РѕС‰Р°РґРё РїРѕРјРµС‰РµРЅРёСЏ, Р±РµР· РјР°С‚РµСЂРёР°Р»РѕРІ.</p>
+    <label class="choice">
+      <input type="radio" name="tariff" value="3000">
+      <span class="choice-body">
+        <span class="choice-title">РљРѕСЃРјРµС‚РёС‡РµСЃРєРёР№<span class="price">3 000 в‚Ѕ/РјВІ</span></span>
+        <span class="choice-desc">РЎС‚РµРЅС‹, РїРѕС‚РѕР»РѕРє, РїРѕР»: РїРѕРґРіРѕС‚РѕРІРєР°, С€РїР°РєР»С‘РІРєР°, РїРѕРєСЂР°СЃРєР° РёР»Рё РѕР±РѕРё, РїР»РёРЅС‚СѓСЃС‹.</span>
+      </span>
+    </label>
+    <label class="choice">
+      <input type="radio" name="tariff" value="5000">
+      <span class="choice-body">
+        <span class="choice-title">РљРѕРјРїР»РµРєСЃРЅС‹Р№<span class="price">5 000 в‚Ѕ/РјВІ</span></span>
+        <span class="choice-desc">РљРѕСЃРјРµС‚РёС‡РµСЃРєРёР№ СЂРµРјРѕРЅС‚ РїР»СЋСЃ С€С‚СѓРєР°С‚СѓСЂРєР° СЃС‚РµРЅ, РІС‹СЂР°РІРЅРёРІР°РЅРёРµ РїРѕР»Р° Рё РѕС‚РєРѕСЃС‹.</span>
+      </span>
+    </label>
+    <label class="choice">
+      <input type="radio" name="tariff" value="2000">
+      <span class="choice-body">
+        <span class="choice-title">РЎР°РЅСѓР·РµР» РїРѕРґ РєР»СЋС‡<span class="price">2 000 в‚Ѕ/РјВІ</span></span>
+        <span class="choice-desc">РџР»РёС‚РєР° РЅР° СЃС‚РµРЅС‹ Рё РїРѕР», РїРѕРґРіРѕС‚РѕРІРєР° РѕСЃРЅРѕРІР°РЅРёСЏ.</span>
+      </span>
+    </label>
+    <div class="err" id="e2a">Р’С‹Р±РµСЂРёС‚Рµ С‚РёРї СЂРµРјРѕРЅС‚Р°</div>
+    <div class="btn-row" style="margin-top:14px">
+      <button class="btn btn-ghost" data-back="s1">РќР°Р·Р°Рґ</button>
+      <button class="btn btn-primary" id="next2a">Р”Р°Р»РµРµ</button>
     </div>
-    <div class="item-row">
-      <label for="plumbing-qty">Установка сантехники — раковина, унитаз (3000 ₽)</label>
-      <input type="checkbox" id="plumbing-qty" style="width:auto;">
-    </div>
-    <div class="item-row">
-      <label for="trim-qty">Плинтуса (300 ₽/метр)</label>
-      <input type="number" id="trim-qty" class="qty-input" placeholder="0" min="0" value="0">
-    </div>
-    <button id="calculate">Рассчитать стоимость</button>
-  </div>
+  </section>
 
-  <div id="step4" class="step">
-    <div class="result-box">
-      <h2>Итоговая стоимость:</h2>
-      <div class="total-price" id="total-price">— ₽</div>
-      <div class="details" id="min-order-note"></div>
-      <div class="disclaimer">* Сумма примерная. Точный расчёт — бесплатно: напишите мне, приеду на замер.</div>
+  <!-- РЁР°Рі 2b: СЃРїРёСЃРѕРє СЂР°Р±РѕС‚ -->
+  <section class="card step" id="s2b">
+    <h2>РћС‚РјРµС‚СЊС‚Рµ СЂР°Р±РѕС‚С‹</h2>
+    <p class="hint">РЈРєР°Р¶РёС‚Рµ РѕР±СЉС‘РјС‹. РЎС‡РёС‚Р°С‚СЊ РјРѕР¶РЅРѕ Рё РѕРґРЅСѓ РїРѕР·РёС†РёСЋ.</p>
+    <div id="worksList"></div>
+    <div class="live"><span>РС‚РѕРіРѕ</span><b id="liveTotal">0 в‚Ѕ</b></div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" data-back="s1">РќР°Р·Р°Рґ</button>
+      <button class="btn btn-primary" id="next2b">РџРѕРєР°Р·Р°С‚СЊ СЂР°СЃС‡С‘С‚</button>
     </div>
-    <h3>Получить точный расчёт:</h3>
+  </section>
+
+  <!-- РЁР°Рі 3: РїР»РѕС‰Р°РґСЊ -->
+  <section class="card step" id="s3">
+    <h2>РџР»РѕС‰Р°РґСЊ РїРѕРјРµС‰РµРЅРёСЏ</h2>
+    <p class="hint">РћР±С‰Р°СЏ РїР»РѕС‰Р°РґСЊ, РїРѕ РїРѕР»Сѓ вЂ” РІ РјВІ.</p>
+    <div class="field">
+      <label for="area">РџР»РѕС‰Р°РґСЊ, РјВІ</label>
+      <input type="number" id="area" inputmode="decimal" min="1" step="0.1" placeholder="РќР°РїСЂРёРјРµСЂ: 35">
+      <div class="err" id="e3">Р’РІРµРґРёС‚Рµ РїР»РѕС‰Р°РґСЊ С‡РёСЃР»РѕРј Р±РѕР»СЊС€Рµ РЅСѓР»СЏ</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" data-back="s2a">РќР°Р·Р°Рґ</button>
+      <button class="btn btn-primary" id="next3">Р Р°СЃСЃС‡РёС‚Р°С‚СЊ</button>
+    </div>
+  </section>
+
+  <!-- РЁР°Рі 4: СЂРµР·СѓР»СЊС‚Р°С‚ -->
+  <section class="card step" id="s4" aria-live="polite">
+    <div class="result">
+      <div class="label">РћСЂРёРµРЅС‚РёСЂРѕРІРѕС‡РЅР°СЏ СЃС‚РѕРёРјРѕСЃС‚СЊ СЂР°Р±РѕС‚</div>
+      <div class="total" id="total">вЂ” в‚Ѕ</div>
+      <div class="note" id="note"></div>
+      <div class="min-order" id="minOrder">РњРёРЅРёРјР°Р»СЊРЅС‹Р№ Р·Р°РєР°Р· вЂ” 5 000 в‚Ѕ</div>
+      <div class="breakdown" id="breakdown"></div>
+    </div>
+    <p class="disclaimer" id="disclaimer">Р¦РµРЅС‹ вЂ” Р·Р° СЂР°Р±РѕС‚Сѓ Р±РµР· РјР°С‚РµСЂРёР°Р»РѕРІ. РЎСѓРјРјР° РѕСЂРёРµРЅС‚РёСЂРѕРІРѕС‡РЅР°СЏ: С‚РѕС‡РЅСѓСЋ Р·Р°С„РёРєСЃРёСЂСѓСЋ РІ СЃРјРµС‚Рµ РїРѕСЃР»Рµ Р±РµСЃРїР»Р°С‚РЅРѕРіРѕ Р·Р°РјРµСЂР°.</p>
+    <h3 style="font-size:16px;margin:16px 0 10px">РџРѕР»СѓС‡РёС‚СЊ С‚РѕС‡РЅС‹Р№ СЂР°СЃС‡С‘С‚</h3>
     <div class="links">
-      <a href="https://golnk.ru/K9NwW" class="link-btn max" onclick="openLink(this.href);return false;">💬 Написать мастеру в MAX — отвечу за 30 минут</a>
-      <a href="tel:+79178130283" class="link-btn tel">📞 Позвонить</a>
-      <a href="https://max.ru/channel_econom_remont" class="link-btn channel" onclick="openLink(this.href);return false;">📷 Смотреть канал с реальными работами</a>
+      <a class="link-btn tg" href="https://t.me/remont_kv63" target="_blank" rel="noopener">Telegram вЂ” РЅР°РїРёСЃР°С‚СЊ РјР°СЃС‚РµСЂСѓ</a>
+      <a class="link-btn max" href="https://golnk.ru/K9NwW" target="_blank" rel="noopener">MAX вЂ” РЅР°РїРёСЃР°С‚СЊ РјР°СЃС‚РµСЂСѓ</a>
+      <a class="link-btn tel" id="telBtn" href="tel:+79178130283">РџРѕР·РІРѕРЅРёС‚СЊ: 8 917 813-02-83</a>
+      <a class="link-btn site" href="https://remontkvsamara.ru" target="_blank" rel="noopener">РЎР°Р№С‚ СЃ РїСЂРёРјРµСЂР°РјРё СЂР°Р±РѕС‚</a>
     </div>
-  </div>
+    <div class="under">Р¤РѕС‚Рѕ СЂР°Р±РѕС‚ вЂ” РІ <a href="https://t.me/EkonSamara" target="_blank" rel="noopener">Telegram-РєР°РЅР°Р»Рµ</a> Рё <a href="https://vk.ru/remontkv_samara" target="_blank" rel="noopener">Р’РљРѕРЅС‚Р°РєС‚Рµ</a></div>
+    <div class="btn-row back">
+      <button class="btn btn-ghost" id="copy">РЎРєРѕРїРёСЂРѕРІР°С‚СЊ СЂР°СЃС‡С‘С‚</button>
+      <button class="btn btn-ghost" id="restart">РЎРЅР°С‡Р°Р»Р°</button>
+    </div>
+  </section>
+</main>
 
-  <script>
-    function openLink(url) {
-      try {
-        if (window.top !== window.self) { window.top.location.href = url; return; }
-      } catch (e) {}
-      window.location.href = url;
+<div class="toast" id="toast">Р Р°СЃС‡С‘С‚ СЃРєРѕРїРёСЂРѕРІР°РЅ</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* в”Ђв”Ђ Р¦РµРЅС‹ РІ РѕРґРЅРѕРј РјРµСЃС‚Рµ. РњРµРЅСЏСЋС‚СЃСЏ Р·РґРµСЃСЊ Рё С‚РѕР»СЊРєРѕ Р·РґРµСЃСЊ. в”Ђв”Ђ */
+  var WORKS = [
+    {id:"shtukaturka", name:"РЁС‚СѓРєР°С‚СѓСЂРєР° СЃС‚РµРЅ",              rate:500,  unit:"РјВІ",    step:1},
+    {id:"shpaklevka",  name:"РЁРїР°РєР»С‘РІРєР° СЃС‚РµРЅ",               rate:350,  unit:"РјВІ",    step:1},
+    {id:"shkurka",     name:"РЁР»РёС„РѕРІРєР° СЃС‚РµРЅ (С€РєСѓСЂРєР°)",       rate:150,  unit:"РјВІ",    step:1},
+    {id:"pokraska",    name:"РџРѕРєСЂР°СЃРєР° СЃС‚РµРЅ Рё РїРѕС‚РѕР»РєР°",      rate:450,  unit:"РјВІ",    step:1},
+    {id:"oboi",        name:"РџРѕРєР»РµР№РєР° РѕР±РѕРµРІ, РІ С‚.С‡. РІСЃС‚С‹Рє Рё СЃРѕ СЃС‚С‹РєРѕРІРєРѕР№ СЂРёСЃСѓРЅРєР°", rate:250, unit:"РјВІ", step:1},
+    {id:"fotooboi",    name:"Р¤РѕС‚РѕРѕР±РѕРё",                     rate:350,  unit:"РјВІ",    step:1},
+    {id:"paneli",      name:"РџР»Р°СЃС‚РёРєРѕРІС‹Рµ РїР°РЅРµР»Рё",           rate:500,  unit:"РјВІ",    step:1},
+    {id:"laminat",     name:"РЈРєР»Р°РґРєР° Р»Р°РјРёРЅР°С‚Р°",             rate:500,  unit:"РјВІ",    step:1},
+    {id:"kvarc",       name:"РЈРєР»Р°РґРєР° РєРІР°СЂС†РІРёРЅРёР»Р°",          rate:500,  unit:"РјВІ",    step:1},
+    {id:"linoleum",    name:"РЈРєР»Р°РґРєР° Р»РёРЅРѕР»РµСѓРјР°",            rate:350,  unit:"РјВІ",    step:1},
+    {id:"plintus_pol", name:"РџР»РёРЅС‚СѓСЃ РЅР°РїРѕР»СЊРЅС‹Р№",            rate:350,  unit:"РїРѕРі.Рј", step:0.5},
+    {id:"plintus_pot", name:"РџР»РёРЅС‚СѓСЃ РїРѕС‚РѕР»РѕС‡РЅС‹Р№",           rate:300,  unit:"РїРѕРі.Рј", step:0.5},
+    {id:"otkosy",      name:"РћС‚РєРѕСЃС‹ (РѕРєРЅРѕ, РґРІРµСЂСЊ)",         rate:800,  unit:"С€С‚",    step:1},
+    {id:"koroba",      name:"РљРѕСЂРѕР±Р° СЃР°РЅС‚РµС…РЅРёС‡РµСЃРєРёРµ Рё РІРµРЅС‚РёР»СЏС†РёРѕРЅРЅС‹Рµ", rate:3500, unit:"С€С‚", step:1},
+    {id:"sanuzen",     name:"РЎР°РЅСѓР·РµР» РїРѕРґ РєР»СЋС‡ (РїР»РёС‚РєР°)",    rate:2000, unit:"РјВІ",    step:1},
+    {id:"rozetki",     name:"Р РѕР·РµС‚РєРё Рё РІС‹РєР»СЋС‡Р°С‚РµР»Рё (Р·Р°РјРµРЅР°, РїРѕ СЃРѕРіР»Р°СЃРѕРІР°РЅРёСЋ)", rate:500, unit:"С€С‚", step:1},
+    {id:"santehnika",  name:"РЈСЃС‚Р°РЅРѕРІРєР° СЃР°РЅС‚РµС…РЅРёРєРё: СѓРЅРёС‚Р°Р·, СЂР°РєРѕРІРёРЅР°, РІР°РЅРЅР°, СЃРјРµСЃРёС‚РµР»СЊ", rate:3000, unit:"С€С‚", step:1}
+  ];
+  var EXTRAS = [
+    {id:"x_otkos",      name:"РћС‚РєРѕСЃС‹",                     rate:800,  unit:"С€С‚"},
+    {id:"x_korob",      name:"РљРѕСЂРѕР±Р°",                     rate:3500, unit:"С€С‚"},
+    {id:"x_rozetki",    name:"Р РѕР·РµС‚РєРё Рё РІС‹РєР»СЋС‡Р°С‚РµР»Рё",      rate:500,  unit:"С€С‚"},
+    {id:"x_santehnika", name:"РЈСЃС‚Р°РЅРѕРІРєР° СЃР°РЅС‚РµС…РЅРёРєРё",       rate:3000, unit:"С€С‚"}
+  ];
+  var MIN_ORDER = 5000;
+
+  var state = {mode:null, tariff:null, area:0, works:{}, extras:{}};
+  var $ = function(id){ return document.getElementById(id); };
+  var money = function(n){ return Math.round(n).toLocaleString("ru-RU").replace(/\u00A0/g," ") + " в‚Ѕ"; };
+  function show(id){
+    document.querySelectorAll(".step").forEach(function(s){ s.classList.remove("active"); });
+    $(id).classList.add("active");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+  function hideErr(id){ $(id).classList.remove("show"); }
+
+  /* РЎРїРёСЃРѕРє СЂР°Р±РѕС‚ */
+  var list = $("worksList");
+  WORKS.forEach(function(w){
+    var row = document.createElement("div");
+    row.className = "work";
+    row.innerHTML =
+      '<input type="checkbox" id="c_'+w.id+'" aria-label="'+w.name+'">' +
+      '<label class="work-label" for="c_'+w.id+'">'+w.name+
+        '<span class="work-rate">'+(w.rate === null ? (w.note ? w.note + ', ' : '') + 'С†РµРЅР° РїРѕ Р·Р°РїСЂРѕСЃСѓ вЂ” РїРѕСЃР»Рµ Р·Р°РјРµСЂР°' : money(w.rate)+' / '+w.unit)+'</span></label>' +
+      '<input type="number" id="q_'+w.id+'" min="0" step="'+w.step+'" value="" placeholder="0" inputmode="decimal" disabled aria-label="РћР±СЉС‘Рј: '+w.name+'">';
+    list.appendChild(row);
+    row.querySelector("#c_"+w.id).addEventListener("change", function(e){
+      var q = row.querySelector("#q_"+w.id);
+      q.disabled = !e.target.checked;
+      if(e.target.checked && !q.value){ q.value = (w.unit === "РјВІ" ? 10 : (w.unit === "С€С‚" ? 1 : 10)); }
+      if(!e.target.checked){ q.value = ""; }
+      recalcWorks();
+    });
+    row.querySelector("#q_"+w.id).addEventListener("input", recalcWorks);
+  });
+
+  function worksTotal(){
+    var sum = 0;
+    WORKS.forEach(function(w){
+      var c = $("c_"+w.id), q = $("q_"+w.id);
+      if(c && c.checked && w.rate !== null){
+        var v = parseFloat(String(q.value).replace(",", "."));
+        if(v > 0){ sum += v * w.rate; }
+      }
+    });
+    return sum;
+  }
+  function recalcWorks(){
+    var t = worksTotal();
+    var byRequest = 0;
+    state.works = {};
+    WORKS.forEach(function(w){
+      var c = $("c_"+w.id), q = $("q_"+w.id);
+      if(c && c.checked){
+        var v = parseFloat(String(q.value).replace(",", "."));
+        if(v > 0){
+          state.works[w.id] = {qty:v, rate:w.rate, unit:w.unit, name:w.name};
+          if(w.rate === null){ byRequest++; }
+        }
+      }
+    });
+    $("liveTotal").textContent = money(t) + (byRequest ? " + РїРѕ Р·Р°РїСЂРѕСЃСѓ" : "");
+  }
+
+  /* Р”РѕРї. СЂР°Р±РѕС‚С‹ РІ СЂРµР¶РёРјРµ В«РїРѕРґ РєР»СЋС‡В» */
+  var extrasBox = document.createElement("div");
+  extrasBox.id = "extrasBox";
+  extrasBox.style.display = "none";
+  extrasBox.style.marginTop = "16px";
+  extrasBox.innerHTML = '<h3 style="font-size:15px;margin-bottom:2px">Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕ</h3>' +
+    '<p class="hint" style="margin-bottom:8px">Р­С‚Рё СЂР°Р±РѕС‚С‹ РІ С‚Р°СЂРёС„ РЅРµ РІС…РѕРґСЏС‚ вЂ” СЃС‡РёС‚Р°СЋС‚СЃСЏ РѕС‚РґРµР»СЊРЅРѕ.</p>';
+  EXTRAS.forEach(function(x){
+    var row = document.createElement("div");
+    row.className = "work";
+    row.innerHTML =
+      '<input type="checkbox" id="xc_'+x.id+'" aria-label="'+x.name+'">' +
+      '<label class="work-label" for="xc_'+x.id+'">'+x.name+
+        '<span class="work-rate">'+money(x.rate)+' / '+x.unit+'</span></label>' +
+      '<input type="number" id="xq_'+x.id+'" min="0" step="1" placeholder="0" inputmode="numeric" disabled aria-label="РљРѕР»РёС‡РµСЃС‚РІРѕ: '+x.name+'">';
+    extrasBox.appendChild(row);
+    row.querySelector("#xc_"+x.id).addEventListener("change", function(e){
+      var q = row.querySelector("#xq_"+x.id);
+      q.disabled = !e.target.checked;
+      if(e.target.checked && !q.value){ q.value = 1; }
+      if(!e.target.checked){ q.value = ""; }
+    });
+  });
+  $("s3").querySelector(".btn-row").before(extrasBox);
+
+  /* РќР°РІРёРіР°С†РёСЏ */
+  $("next1").addEventListener("click", function(){
+    var m = document.querySelector('input[name="mode"]:checked');
+    if(!m){ $("e1").classList.add("show"); return; }
+    hideErr("e1");
+    state.mode = m.value;
+    show(state.mode === "turnkey" ? "s2a" : "s2b");
+  });
+  document.querySelectorAll('input[name="mode"]').forEach(function(r){
+    r.addEventListener("change", function(){ hideErr("e1"); });
+  });
+
+  $("next2a").addEventListener("click", function(){
+    var t = document.querySelector('input[name="tariff"]:checked');
+    if(!t){ $("e2a").classList.add("show"); return; }
+    hideErr("e2a");
+    state.tariff = parseInt(t.value, 10);
+    extrasBox.style.display = "block";
+    show("s3");
+  });
+  document.querySelectorAll('input[name="tariff"]').forEach(function(r){
+    r.addEventListener("change", function(){ hideErr("e2a"); });
+  });
+
+  document.querySelectorAll("[data-back]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var target = b.getAttribute("data-back");
+      if(target === "s1"){ extrasBox.style.display = "none"; }
+      show(target);
+    });
+  });
+
+  $("next2b").addEventListener("click", function(){
+    if(!Object.keys(state.works).length){ $("e2b").classList.add("show"); return; }
+    hideErr("e2b");
+    renderResult(worksTotal(), "works");
+    show("s4");
+  });
+  // СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ РґР»СЏ СЃРїРёСЃРєР° СЂР°Р±РѕС‚
+  var e2b = document.createElement("div");
+  e2b.className = "err"; e2b.id = "e2b"; e2b.textContent = "РћС‚РјРµС‚СЊС‚Рµ С…РѕС‚СЏ Р±С‹ РѕРґРЅСѓ СЂР°Р±РѕС‚Сѓ Рё СѓРєР°Р¶РёС‚Рµ РѕР±СЉС‘Рј";
+  $("s2b").querySelector(".btn-row").before(e2b);
+
+  $("next3").addEventListener("click", function(){
+    var v = parseFloat(String($("area").value).replace(",", "."));
+    if(!(v > 0)){ $("e3").classList.add("show"); return; }
+    hideErr("e3");
+    state.area = v;
+    var total = state.tariff * v;
+    EXTRAS.forEach(function(x){
+      var c = $("xc_"+x.id), q = $("xq_"+x.id);
+      if(c && c.checked){
+        var n = parseFloat(String(q.value).replace(",", "."));
+        if(n > 0){ total += n * x.rate; }
+      }
+    });
+    renderResult(total, "turnkey");
+    show("s4");
+  });
+
+  var lastText = "";
+
+  function renderResult(total, mode){
+    var minNote = false;
+    if(total > 0 && total < MIN_ORDER){ minNote = true; total = MIN_ORDER; }
+
+    $("total").textContent = total > 0 ? "РѕС‚ " + money(total) : "РїРѕ Р·Р°РїСЂРѕСЃСѓ";
+    $("minOrder").classList.toggle("show", minNote);
+
+    var rows = [];
+    if(mode === "turnkey"){
+      var tname = state.tariff === 3000 ? "РљРѕСЃРјРµС‚РёС‡РµСЃРєРёР№ СЂРµРјРѕРЅС‚" : state.tariff === 5000 ? "РљРѕРјРїР»РµРєСЃРЅС‹Р№ СЂРµРјРѕРЅС‚" : "РЎР°РЅСѓР·РµР» РїРѕРґ РєР»СЋС‡";
+      rows.push([tname + ": " + state.tariff.toLocaleString("ru-RU") + " в‚Ѕ/РјВІ Г— " + state.area + " РјВІ", money(state.tariff * state.area)]);
+      EXTRAS.forEach(function(x){
+        var c = $("xc_"+x.id), q = $("xq_"+x.id);
+        if(c && c.checked){
+          var n = parseFloat(String(q.value).replace(",", "."));
+          if(n > 0){ rows.push([x.name + ": " + n + " " + x.unit, money(n * x.rate)]); }
+        }
+      });
+      $("note").textContent = "РџР»РѕС‰Р°РґСЊ " + state.area + " РјВІ В· " + tname.toLowerCase();
+      lastText = "РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ СЂРµРјРѕРЅС‚Р° вЂ” РјР°СЃС‚РµСЂ Р“РµРЅРЅР°РґРёР№, РЎР°РјР°СЂР°\n" + tname + ", " + state.area + " РјВІ\nРС‚РѕРіРѕ: РѕС‚ " + money(total) + " (СЂР°Р±РѕС‚С‹ Р±РµР· РјР°С‚РµСЂРёР°Р»РѕРІ)";
+    } else {
+      var byRequest = [];
+      WORKS.forEach(function(w){
+        if(state.works[w.id]){
+          var it = state.works[w.id];
+          if(it.rate === null){
+            rows.push([it.name + ": " + it.qty + " " + it.unit, "РїРѕ Р·Р°РїСЂРѕСЃСѓ"]);
+            byRequest.push(it.name);
+          } else {
+            rows.push([it.name + ": " + it.qty + " " + it.unit, money(it.qty * it.rate)]);
+          }
+        }
+      });
+      $("note").textContent = "РћС‚РґРµР»СЊРЅС‹Рµ СЂР°Р±РѕС‚С‹, " + rows.length + " РїРѕР·." + (byRequest.length ? " В· РїРѕ Р·Р°РїСЂРѕСЃСѓ: " + byRequest.join(", ") : "");
+      lastText = "РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ СЂРµРјРѕРЅС‚Р° вЂ” РјР°СЃС‚РµСЂ Р“РµРЅРЅР°РґРёР№, РЎР°РјР°СЂР°\n" +
+        rows.map(function(r){ return "вЂў " + r[0] + " вЂ” " + r[1]; }).join("\n") +
+        "\nРС‚РѕРіРѕ: РѕС‚ " + money(total) + " (СЂР°Р±РѕС‚С‹ Р±РµР· РјР°С‚РµСЂРёР°Р»РѕРІ)";
     }
 
-    document.getElementById('next-step1').addEventListener('click', () => {
-      const selected = document.querySelector('input[name="repair-type"]:checked');
-      if (!selected) { alert('Пожалуйста, выберите тип ремонта'); return; }
-      document.getElementById('step1').classList.remove('active');
-      document.getElementById('step2').classList.add('active');
-    });
+    $("breakdown").innerHTML = rows.map(function(r){
+      return "<div><span>" + r[0] + "</span><span>" + r[1] + "</span></div>";
+    }).join("");
+    state.total = total;
+  }
 
-    document.getElementById('next-step2').addEventListener('click', () => {
-      const areaInput = document.getElementById('area-input');
-      if (!areaInput.value || isNaN(areaInput.value) || areaInput.value <= 0) {
-        alert('Пожалуйста, введите корректную площадь'); return;
-      }
-      document.getElementById('step2').classList.remove('active');
-      document.getElementById('step3').classList.add('active');
-    });
-
-    document.getElementById('calculate').addEventListener('click', () => {
-      const repairType = document.querySelector('input[name="repair-type"]:checked');
-      const area = parseFloat(document.getElementById('area-input').value) || 0;
-      const socketsQty = parseInt(document.getElementById('sockets-qty').value) || 0;
-      const plumbingChecked = document.getElementById('plumbing-qty').checked;
-      const trimQty = parseInt(document.getElementById('trim-qty').value) || 0;
-
-      const additionalTotal = (socketsQty * 500) + (plumbingChecked ? 3000 : 0) + (trimQty * 300);
-      const basePrice = parseFloat(repairType.dataset.price);
-      const total = (basePrice * area) + additionalTotal;
-      showResult(total);
-    });
-
-    function showResult(total) {
-      if (total < 5000 && total > 0) {
-        document.getElementById('min-order-note').textContent = 'Минимальный заказ — 5000 ₽';
-        total = 5000;
-      } else {
-        document.getElementById('min-order-note').textContent = '';
-      }
-      document.getElementById('total-price').textContent = `${Math.round(total)} ₽`;
-      document.getElementById('step3').classList.remove('active');
-      document.getElementById('step4').classList.add('active');
+  /* РљРѕРїРёСЂРѕРІР°РЅРёРµ */
+  $("copy").addEventListener("click", function(){
+    var text = lastText;
+    function done(){ var t = $("toast"); t.classList.add("show"); setTimeout(function(){ t.classList.remove("show"); }, 1800); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+    function fallback(){
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand("copy"); done(); }catch(e){}
+      document.body.removeChild(ta);
     }
-  </script>
+  });
+
+  /* РЎРЅР°С‡Р°Р»Р° */
+  $("restart").addEventListener("click", function(){
+    document.querySelectorAll('input[name="mode"], input[name="tariff"]').forEach(function(r){ r.checked = false; });
+    document.querySelectorAll('#worksList input[type=checkbox], #extrasBox input[type=checkbox]').forEach(function(c){ c.checked = false; });
+    document.querySelectorAll('#worksList input[type=number], #extrasBox input[type=number]').forEach(function(q){ q.value = ""; q.disabled = true; });
+    $("area").value = "";
+    $("liveTotal").textContent = "0 в‚Ѕ";
+    $("total").textContent = "вЂ” в‚Ѕ";
+    $("breakdown").innerHTML = "";
+    $("note").textContent = "";
+    ["e1","e2a","e3"].forEach(hideErr);
+    extrasBox.style.display = "none";
+    state = {mode:null, tariff:null, area:0, works:{}, extras:{}};
+    show("s1");
+  });
+})();
+</script>
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();
+  for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+  k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+  ym(106531782, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/106531782" style="position:absolute; left:-9999px;" alt=""></div></noscript>
 </body>
 </html>
